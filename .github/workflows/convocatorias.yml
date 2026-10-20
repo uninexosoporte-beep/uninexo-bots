@@ -3,11 +3,16 @@ on:
   schedule:
     - cron: '0 7 * * *'   # 02:00 de Perú
   workflow_dispatch:
+    inputs:
+      forzar:
+        description: "Correr aunque hoy ya haya corrido (para probar)"
+        type: boolean
+        default: false
 concurrency: { group: bot-convocatorias, cancel-in-progress: false }
 permissions:
   contents: write   # para guardar la memoria del bot en el repositorio
 jobs:
   correr:
     uses: ./.github/workflows/_correr-bot.yml
-    with: { carpeta: convocatorias }
+    with: { carpeta: convocatorias, argumentos: "${{ inputs.forzar && '--forzar' || '' }}" }
     secrets: inherit
