@@ -1,0 +1,59 @@
+# Flujo común: corre UN bot y guarda su memoria en el repositorio (los servidores de GitHub se borran al terminar).
+# Lo llaman empleos.yml, cursos.yml, convocatorias.yml y aprobaciones.yml.
+name: Correr bot
+on:
+  workflow_call:
+    inputs:
+      carpeta: { required: true, type: string }
+      argumentos: { required: false, type: string, default: '' }
+      minutos: { required: false, type: number, default: 70 }
+
+permissions:
+  contents: write
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.minutos }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Credenciales (desde los Secrets; nunca se guardan en el repositorio)
+        env:
+          EMPLEOS_ENV: ${{ secrets.EMPLEOS_ENV }}
+          CURSOS_ENV: ${{ secrets.CURSOS_ENV }}
+          CONVOCATORIAS_ENV: ${{ secrets.CONVOCATORIAS_ENV }}
+        run: |
+          printf '%s\n' "$EMPLEOS_ENV" > empleos/.env
+          printf '%s\n' "$CURSOS_ENV" > cursos/.env
+          printf '%s\n' "$CONVOCATORIAS_ENV" > convocatorias/.env
+          chmod 600 */.env
+
+      - name: Correr el bot
+        working-directory: ${{ inputs.carpeta }}
+        env:
+          UNINEXO_PUBLICADOR_DIR: ${{ github.workspace }}/publicador
+          UNINEXO_CREDENCIALES: ${{ github.workspace }}/empleos/.env
+          UNINEXO_NAVEGADOR: /usr/bin/google-chrome
+          PYTHONIOENCODING: utf-8
+        run: python bot.py ${{ inputs.argumentos }}
+
+      - name: Ver el registro del bot
+        if: always()
+        run: tail -n 40 ${{ inputs.carpeta }}/logs/*.log 2>/dev/null || true
+
+      - name: Guardar la memoria del bot
+        if: always()
+        run: |
+          rm -f */.env
+          git config user.name 'UniNexo bots'
+          git config user.email 'bots@uninexo.link'
+          git add -A ${{ inputs.carpeta }}
+          git diff --cached --quiet && exit 0
+          git commit -m "Memoria de ${{ inputs.carpeta }} · $(TZ=America/Lima date '+%d/%m/%Y %H:%M')"
+          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done
+          exit 1

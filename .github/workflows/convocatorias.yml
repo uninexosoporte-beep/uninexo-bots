@@ -1,0 +1,11 @@
+name: Bot de Convocatorias
+on:
+  schedule:
+    - cron: '0 7 * * *'   # 02:00 de Perú
+  workflow_dispatch:
+concurrency: { group: bot-convocatorias, cancel-in-progress: false }
+jobs:
+  correr:
+    uses: ./.github/workflows/_correr-bot.yml
+    with: { carpeta: convocatorias }
+    secrets: inherit

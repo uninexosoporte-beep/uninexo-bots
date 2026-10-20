@@ -1,0 +1,135 @@
+{
+  "version": "2026-10-07",
+  "nota": "Lista de páginas de empleo que revisa el bot cada día. 'verificada' = se comprobó el 07/10/2026 que se puede leer desde esta PC. Para agregar una, copiar un bloque y probarlo con: python bot.py --simular --solo-fuente <id>",
+  "reglas": {
+    "fechas": [
+      "Solo se avisa si la convocatoria sigue abierta y le quedan al menos 3 días (config: dias_minimos_abierta).",
+      "Cada aviso muestra la fecha de cierre y los días que faltan; las vencidas se ignoran y nunca van al archivo de salida.",
+      "Las publicaciones de gob.pe no traen fecha de cierre: se avisan solo si son de los últimos 3 días y se marcan 'revisar bases'.",
+      "Todas las fechas se calculan con hora de Perú (UTC-5)."
+    ],
+    "duplicados": [
+      "Cada oferta de SERVIR tiene una clave única (región, entidad, cargo, número de convocatoria, ubicación) guardada en una base local: nunca se avisa dos veces.",
+      "Cada anuncio de gob.pe se identifica por su enlace: tampoco se repite.",
+      "SERVIR (plazas) y gob.pe (documentos) son dos canales distintos: un mismo proceso puede aparecer en los dos, pero cada uno se avisa una sola vez y en secciones separadas.",
+      "Si una oferta de SERVIR cambia su fecha de cierre (ampliación) se avisa una vez más, marcada como AMPLIADA.",
+      "Lo que ya está publicado en UniNexo (convocatorias_estado, lectura pública) no se vuelve a avisar."
+    ]
+  },
+  "fuentes": [
+    {
+      "id": "servir-ofertas",
+      "nombre": "SERVIR · Talento Perú: ofertas laborales (las 25 regiones)",
+      "tipo": "estructurada",
+      "url": "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/ofertas_laborales.xhtml",
+      "estado": "verificada",
+      "cubre": "Por ley toda entidad del Estado publica aquí sus CAS: ministerios, Poder Judicial, Ministerio Público, UGEL, municipalidades, gobiernos regionales, hospitales, universidades públicas…",
+      "extrae": "cargo, entidad, distrito, sueldo, número de convocatoria, vacantes y fecha de cierre",
+      "frecuencia": "diaria, las 3 primeras páginas de cada región (las que cierran más tarde)"
+    },
+    {
+      "id": "servir-practicas",
+      "nombre": "SERVIR · Talento Perú: prácticas pre y profesionales",
+      "tipo": "estructurada",
+      "url": "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/modalidades_formativas.xhtml",
+      "estado": "verificada",
+      "cubre": "Prácticas en entidades del Estado (misma plataforma, mismo formato de bloques)",
+      "extrae": "puesto, entidad, ubicación, subvención y fecha de cierre",
+      "frecuencia": "diaria"
+    },
+    {
+      "id": "gobpe-busqueda",
+      "nombre": "gob.pe · búsqueda de convocatorias publicadas por cualquier institución",
+      "tipo": "anuncios",
+      "url": "https://www.gob.pe/busquedas.json",
+      "terminos": [
+        "proceso CAS",
+        "convocatoria CAS",
+        "convocatoria de trabajo",
+        "concurso público de méritos",
+        "convocatoria de prácticas",
+        "convocatoria docente"
+      ],
+      "estado": "verificada",
+      "cubre": "Anuncios y bases que las entidades suben a gob.pe, con enlace directo al documento (SERVIR no da enlace directo)",
+      "extrae": "título, institución, fecha de publicación y enlace",
+      "filtro": "título con 'convocatoria', 'proceso CAS', 'concurso público de méritos' o 'prácticas'; publicados en los últimos 3 días; se descartan contratos menores, locación, resultados y actas",
+      "frecuencia": "diaria (la búsqueda general trae mucho ruido: por eso se filtra por título y fecha)"
+    },
+    {
+      "id": "gobpe-instituciones",
+      "nombre": "gob.pe · página de publicaciones de instituciones que sí suben sus convocatorias",
+      "tipo": "anuncios",
+      "url": "https://www.gob.pe/institucion/{slug}/informes-publicaciones",
+      "slugs": [
+        "sunarp",
+        "indecopi",
+        "ingemmet",
+        "mtpe",
+        "minedu",
+        "minjus",
+        "minem",
+        "sunat",
+        "sernanp",
+        "serfor",
+        "inia",
+        "pnp",
+        "unamad"
+      ],
+      "estado": "verificada",
+      "cubre": "Ministerios y organismos con convocatorias publicadas en su página de gob.pe, y tu universidad (UNAMAD)",
+      "extrae": "título, fecha y enlace directo de cada publicación nueva",
+      "frecuencia": "diaria, 1 página por institución (se pueden sumar más instituciones)"
+    },
+    {
+      "id": "sunarp-concursos",
+      "nombre": "SUNARP · concursos públicos de méritos (plazas CAS por zona registral)",
+      "tipo": "vigilada",
+      "url": "https://www.gob.pe/institucion/sunarp/colecciones/2164-concursos-publicos-de-meritos-plazas-cas-zona-registral",
+      "estado": "verificada",
+      "cubre": "Colección oficial donde SUNARP agrupa sus procesos CAS (25 enlaces a procesos el 07/10/2026)",
+      "frecuencia": "diaria: avisa si aparece un enlace nuevo",
+      "modo": "enlaces"
+    },
+    {
+      "id": "indecopi-comunicados",
+      "nombre": "INDECOPI · comunicado de convocatorias públicas (CAS y prácticas)",
+      "tipo": "vigilada",
+      "url": "https://www.gob.pe/institucion/indecopi/colecciones/63709-comunicado-de-convocatorias-publicas-modalidades-formativas",
+      "estado": "verificada",
+      "cubre": "Comunicado oficial de INDECOPI con sus convocatorias (la página no lista enlaces: se vigila su texto)",
+      "frecuencia": "diaria: avisa si el texto cambia",
+      "modo": "texto"
+    }
+  ],
+  "no_se_pueden_revisar_solas": [
+    {
+      "nombre": "Empleos Perú (MTPE)",
+      "motivo": "El portal bloquea los programas automáticos (protección anti-bots). Las entidades también publican en SERVIR, así que casi todo llega por ahí."
+    },
+    {
+      "nombre": "Indeed Perú",
+      "motivo": "Responde 403 (Security Check). No se debe saltar."
+    },
+    {
+      "nombre": "Computrabajo y Bumeran",
+      "motivo": "Empleo privado, contenido dinámico y términos de uso que prohíben copiarlo. Fuera de 'Empleos del Estado'."
+    },
+    {
+      "nombre": "EsSalud (SISEP) y RENIEC",
+      "motivo": "Sus páginas devuelven vacío sin navegador. Sus CAS salen igual en SERVIR."
+    },
+    {
+      "nombre": "Ministerio Público y FONAFE",
+      "motivo": "Su certificado de seguridad no lo acepta Python (se ven bien en el navegador). Sus CAS salen en SERVIR; no se desactiva la verificación por seguridad."
+    },
+    {
+      "nombre": "Banco de la Nación, Sedapal, Petroperú y otras empresas del Estado",
+      "motivo": "No tienen una página de convocatorias fija que se pueda leer. Queda como revisión manual mensual."
+    },
+    {
+      "nombre": "convocatoriasdetrabajo.com, perutrabajos.com y lpderecho.pe",
+      "motivo": "Son páginas de terceros: no se copian sus ofertas. De convocatoriasdetrabajo.com ya se enlazan sus canales de WhatsApp por carrera en UniNexo."
+    }
+  ]
+}

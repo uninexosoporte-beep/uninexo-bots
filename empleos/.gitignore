@@ -1,0 +1,5 @@
+.env
+estado.sqlite
+logs/
+salida/
+__pycache__/

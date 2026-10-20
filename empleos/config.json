@@ -1,0 +1,75 @@
+{
+  "hora_aviso": "07:00",
+  "avisar_si_no_hay_novedades": true,
+  "regiones": {
+    "Amazonas": "01",
+    "Áncash": "02",
+    "Apurímac": "03",
+    "Arequipa": "04",
+    "Ayacucho": "05",
+    "Cajamarca": "06",
+    "Callao": "07",
+    "Cusco": "08",
+    "Huancavelica": "09",
+    "Huánuco": "10",
+    "Ica": "11",
+    "Junín": "12",
+    "La Libertad": "13",
+    "Lambayeque": "14",
+    "Lima": "15",
+    "Loreto": "16",
+    "Madre de Dios": "17",
+    "Moquegua": "18",
+    "Pasco": "19",
+    "Piura": "20",
+    "Puno": "21",
+    "San Martín": "22",
+    "Tacna": "23",
+    "Tumbes": "24",
+    "Ucayali": "25"
+  },
+  "servir": {
+    "paginas_por_region": 3,
+    "pausa_entre_paginas_seg": 5,
+    "pausa_entre_regiones_seg": 20,
+    "paginas_practicas": 12
+  },
+  "filtros": {
+    "dias_minimos_abierta": 3,
+    "sueldo_minimo": 1500,
+    "sueldo_maximo": 30000,
+    "max_por_region": 10,
+    "max_por_entidad": 2
+  },
+  "reglas": {
+    "regiones": {
+      "solo": [],
+      "ignorar": [],
+      "prioritarias": [
+        "Madre de Dios"
+      ],
+      "tope_propio": {}
+    },
+    "carreras": {
+      "solo": [],
+      "ignorar": [],
+      "incluir_sin_carrera": true
+    },
+    "cargos": {
+      "excluir_palabras": [],
+      "incluir_palabras": []
+    }
+  },
+  "gobpe": {
+    "dias_recientes": 3,
+    "paginas_busqueda": 2,
+    "pausa_seg": 2,
+    "tipo_convocatoria": "80-convocatoria-de-trabajo"
+  },
+  "formato_aviso": "pdf",
+  "publicacion_automatica": {
+    "activa": true,
+    "proyecto": "D:/uninexo",
+    "dias_archivos": 7
+  }
+}

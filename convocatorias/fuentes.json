@@ -1,0 +1,61 @@
+{
+  "version": "2026-10-08",
+  "nota": "Lista de fuentes que revisa el bot de Convocatorias cada día. 'verificada' = se comprobó el 08/10/2026 que se puede leer desde esta PC. Para agregar un programa vigilado, copia un bloque con \"tipo\": \"vigilada\".",
+  "reglas": {
+    "fechas": [
+      "Solo se avisa lo publicado en los últimos días (dias_recientes) que el bot no haya visto antes.",
+      "Si la página de la convocatoria trae fecha límite, debe quedar al menos dias_minimos_abierta de margen; las vencidas se ignoran.",
+      "Si la página no dice fecha, el aviso sale «sin fecha en la página» (puede ser un programa permanente)."
+    ],
+    "duplicados": [
+      "Cada convocatoria se identifica por su enlace (sin www ni «/» final) y por institución + título: nunca se avisa dos veces.",
+      "Las convocatorias de prácticas NO se avisan una por una (INDECOPI o el MIMP sacan decenas al año): el bot avisa UNA vez por entidad que UniNexo todavía no tenga en la pestaña Convocatorias.",
+      "No avisa lo que ya está publicado en Convocatorias de UniNexo (mismo enlace, misma entidad o casi el mismo nombre).",
+      "Los procesos CAS y las plazas del Estado los cubre el bot de Empleos; aquí se ignoran.",
+      "Lo que el bot propone nunca se publica solo: el admin lo importa con el botón «Importar del bot» y lo revisa antes."
+    ]
+  },
+  "fuentes": [
+    {
+      "id": "gobpe-campanas",
+      "nombre": "gob.pe · campañas de instituciones nacionales (voluntariados, programas de empleo joven, pasantías)",
+      "tipo": "anuncios",
+      "slugs": ["servir", "mtpe", "minedu", "mimp", "minam", "midis", "mpfn", "reniec", "essalud", "indecopi", "osiptel", "osinergmin", "sunarp", "mef", "minjus", "minsa",
+                "cultura", "produce", "pronabec", "sunedu", "concytec", "inei", "senamhi", "sernanp", "senasa", "oefa", "ana", "contraloria", "rree", "mtc", "vivienda",
+                "mincetur", "indeci", "ipd", "devida", "sutran", "anin", "pj", "smv", "jne", "onpe", "unamad"],
+      "estado": "verificada",
+      "frecuencia": "diaria: la primera página de campañas de cada institución"
+    },
+    {
+      "id": "gobpe-busqueda",
+      "nombre": "gob.pe · búsqueda de voluntariados, prácticas, part-time y primer empleo publicados por cualquier institución nacional",
+      "tipo": "anuncios",
+      "busquedas": [
+        {"termino": "programa de voluntariado", "contenidos": ["campañas", "noticias"]},
+        {"termino": "convocatoria voluntariado", "contenidos": ["campañas", "noticias"]},
+        {"termino": "voluntarios", "contenidos": ["campañas"]},
+        {"termino": "convocatoria de prácticas", "contenidos": ["publicaciones", "campañas"], "paginas": 3},
+        {"termino": "practicantes", "contenidos": ["publicaciones"], "paginas": 3},
+        {"termino": "prácticas preprofesionales", "contenidos": ["publicaciones", "noticias"], "paginas": 2},
+        {"termino": "prácticas profesionales", "contenidos": ["publicaciones"], "paginas": 2},
+        {"termino": "modalidades formativas", "contenidos": ["publicaciones"]},
+        {"termino": "pasantías", "contenidos": ["campañas", "noticias"]},
+        {"termino": "part time", "contenidos": ["campañas", "noticias"]},
+        {"termino": "feria laboral", "contenidos": ["campañas", "noticias"]},
+        {"termino": "primer empleo", "contenidos": ["campañas", "noticias"]},
+        {"termino": "jóvenes profesionales", "contenidos": ["campañas", "noticias"]}
+      ],
+      "estado": "verificada",
+      "frecuencia": "diaria; la búsqueda trae ruido y se filtra por título, tipo y fecha"
+    },
+    {"id": "senaju-voluntariado", "nombre": "SENAJU · Programa de Voluntariado Juvenil", "tipo": "vigilada", "modo": "texto", "url": "https://juventud.gob.pe/programa-de-voluntariado-juvenil/", "estado": "verificada"},
+    {"id": "cruzroja-voluntariado", "nombre": "Cruz Roja Peruana · voluntariado", "tipo": "vigilada", "modo": "texto", "url": "https://www.cruzroja.org.pe/voluntariado.html", "estado": "verificada"},
+    {"id": "sinavol-registro", "nombre": "MIMP · Registro de Voluntariado (Sinavol)", "tipo": "vigilada", "modo": "texto", "url": "https://www.gob.pe/796-sistema-nacional-de-voluntariado-sinavol-inscribirse-en-el-registro-de-voluntariado", "estado": "verificada"},
+    {"id": "empleosperu-portal", "nombre": "MTPE · Empleos Perú", "tipo": "vigilada", "modo": "texto", "url": "https://www.empleosperu.gob.pe/portal-mtpe/", "estado": "verificada"}
+  ],
+  "no_se_pueden_revisar_solas": [
+    {"nombre": "SUNAT (unete.sunat.gob.pe), BCP (viabcp.com), ONPE y BCRP", "motivo": "Sus páginas responden 403 o piden «verificar que eres humano»: bloquean programas automáticos. No se debe saltar. Se revisan a mano."},
+    {"nombre": "Lima 2027 (voluntariado de los Juegos Panamericanos)", "motivo": "Su sitio responde igual a cualquier ruta y no deja ver el contenido: no se puede confirmar el enlace del programa de voluntarios."},
+    {"nombre": "Empresas privadas (Interbank, Backus, Alicorp, mineras…)", "motivo": "Sus portales de empleo se arman con JavaScript o piden iniciar sesión, y los avisos están en Bumeran o LinkedIn. Se pueden sumar uno a uno como página vigilada si publican una página fija."}
+  ]
+}

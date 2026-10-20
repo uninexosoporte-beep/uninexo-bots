@@ -1,0 +1,39 @@
+{
+ "offset": 514888075,
+ "cursos": {
+  "e79eaccca32d": {
+   "doc": {
+    "name": "Curso sobre «Protección de datos personales: autodeterminación informativa, derecho al olvido y mecanismos de tutela»",
+    "career": "Derecho y Ciencias Políticas",
+    "region": "Todo el país",
+    "tipo": "curso",
+    "enlaceOficial": "https://www.gob.pe/institucion/tc/noticias/1457666-curso-sobre-proteccion-de-datos-personales-autodeterminacion-informativa-derecho-al-olvido-y-mecanismos-de-tutela-desde-el-21-de-octubre",
+    "institucion": "Tribunal Constitucional",
+    "gratuito": true,
+    "description": "Curso virtual gratuito del Centro de Estudios Constitucionales del TC, del 21 al 23 de octubre. Da certificado con nota mínima de 12.",
+    "area": "Derecho y Ciencias Políticas",
+    "fechaLimite": "2026-10-23",
+    "modalidad": "virtual"
+   },
+   "estado": "publicada",
+   "mensaje": 32,
+   "enviado": "2026-10-20"
+  },
+  "3d9590def361": {
+   "doc": {
+    "name": "Aprende OFIS: plataforma virtual de cursos gratuitos en focalización e información social",
+    "career": "Ciencias Sociales y Humanidades",
+    "region": "Todo el país",
+    "tipo": "curso",
+    "enlaceOficial": "https://www.gob.pe/institucion/ofis/noticias/1456949-ofis-lanza-aprende-ofis-su-nueva-plataforma-virtual-de-capacitacion-en-focalizacion-e-informacion-social",
+    "institucion": "OFIS (MIDIS)",
+    "gratuito": true,
+    "modalidad": "virtual",
+    "description": "Plataforma virtual del MIDIS con cursos sobre el GEOSISFOH y los principios de focalización de hogares, abierta también a la comunidad académica y la ciudadanía."
+   },
+   "estado": "publicada",
+   "mensaje": 33,
+   "enviado": "2026-10-20"
+  }
+ }
+}

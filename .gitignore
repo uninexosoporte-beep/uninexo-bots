@@ -1,0 +1,10 @@
+# Credenciales: SOLO en los Secrets de GitHub o en la PC
+.env
+*.env
+# Registros, candados y temporales
+logs/
+__pycache__/
+*.lock
+*.tmp
+# Los PDF del informe se mandan por Telegram; no hace falta guardarlos
+salida/*.pdf

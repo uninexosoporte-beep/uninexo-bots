@@ -1,0 +1,11 @@
+name: Cursos aprobados en Telegram
+on:
+  schedule:
+    - cron: '30 */2 * * *'   # cada 2 horas: lee tus toques ✅/❌ y publica lo aprobado
+  workflow_dispatch:
+concurrency: { group: bot-cursos, cancel-in-progress: false }
+jobs:
+  correr:
+    uses: ./.github/workflows/_correr-bot.yml
+    with: { carpeta: cursos, argumentos: '--aprobaciones', minutos: 15 }
+    secrets: inherit

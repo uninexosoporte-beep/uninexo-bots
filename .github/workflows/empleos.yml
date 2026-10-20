@@ -1,0 +1,11 @@
+name: Bot de Empleos del Estado
+on:
+  schedule:
+    - cron: '0 5 * * *'   # 00:00 de Perú
+  workflow_dispatch:
+concurrency: { group: bot-empleos, cancel-in-progress: false }
+jobs:
+  correr:
+    uses: ./.github/workflows/_correr-bot.yml
+    with: { carpeta: empleos, minutos: 90 }
+    secrets: inherit

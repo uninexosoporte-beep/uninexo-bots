@@ -1,0 +1,37 @@
+{
+  "hora_aviso": "08:00",
+  "avisar_si_no_hay_novedades": true,
+  "formato_aviso": "pdf",
+  "dias_recientes": 3,
+  "max_por_dia": 40,
+  "paginas_a_leer_por_dia": 40,
+  "pausa_seg": 2,
+  "busqueda_paginas": 1,
+  "reglas": {
+    "tipos": {
+      "solo": [],
+      "ignorar": []
+    },
+    "areas": {
+      "solo": [],
+      "ignorar": []
+    },
+    "solo_gratuitos": false,
+    "incluir_costo_desconocido": true,
+    "dias_minimos_abierta": 2,
+    "instituciones": {
+      "incluir": [
+        "unamad"
+      ],
+      "ignorar": []
+    },
+    "incluir_locales": false,
+    "palabras_excluir": []
+  },
+  "aprobacion_telegram": {
+    "activa": true,
+    "proyecto": "D:/uninexo",
+    "credenciales": "D:/uninexo-bot/.env",
+    "dias_vigencia": 14
+  }
+}

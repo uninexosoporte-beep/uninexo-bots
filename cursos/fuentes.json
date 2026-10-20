@@ -1,0 +1,56 @@
+{
+  "version": "2026-10-07",
+  "nota": "Lista de páginas que revisa el bot de Cursos cada día. 'verificada' = se comprobó el 07/10/2026 que se puede leer desde esta PC. Para agregar una página vigilada, copia un bloque con \"tipo\": \"vigilada\".",
+  "reglas": {
+    "fechas": [
+      "Solo se avisa lo publicado en los últimos días (dias_recientes) que el bot no haya visto antes.",
+      "Si la página de la oportunidad trae una fecha límite, debe quedar al menos dias_minimos_abierta de margen; las vencidas se ignoran.",
+      "Si la página no dice fecha, el aviso sale «sin fecha en la página» (puede ser un programa permanente)."
+    ],
+    "duplicados": [
+      "Cada oportunidad se identifica por su enlace (sin www ni «/» final) y por institución + título: nunca se avisa dos veces.",
+      "No avisa lo que ya está publicado en la sección Cursos de UniNexo (mismo enlace, o misma institución con casi el mismo nombre).",
+      "Lo que el bot propone nunca se publica solo: va a la cola de revisión y tú lo apruebas."
+    ]
+  },
+  "fuentes": [
+    {
+      "id": "gobpe-campanas",
+      "nombre": "gob.pe · campañas de instituciones nacionales (becas, cursos, diplomados, programas)",
+      "tipo": "anuncios",
+      "slugs": ["pronabec", "servir", "mtpe", "concytec", "minedu", "sencico", "serfor", "inia", "osiptel", "sunass", "osinergmin", "indecopi", "cultura", "minam", "produce",
+                "minsa", "sunedu", "senamhi", "igp", "inei", "sunat", "contraloria", "unamad", "midis", "mimp", "mef", "minjus", "ins", "sernanp", "senasa", "oefa", "ana"],
+      "estado": "verificada",
+      "frecuencia": "diaria: la primera página de campañas de cada institución"
+    },
+    {
+      "id": "gobpe-busqueda",
+      "nombre": "gob.pe · búsqueda de becas, cursos y capacitaciones publicados por cualquier institución nacional",
+      "tipo": "anuncios",
+      "terminos": ["beca", "concurso de becas", "curso virtual gratuito", "capacitación gratuita", "diplomado", "programa de extensión universitaria", "taller gratuito", "webinar", "voluntariado", "especialización"],
+      "contenidos": ["campañas", "noticias"],
+      "estado": "verificada",
+      "frecuencia": "diaria; la búsqueda trae ruido y se filtra por título, tipo y fecha"
+    },
+    {"id": "pronabec-concursos", "nombre": "PRONABEC · concursos de becas y créditos", "tipo": "vigilada", "modo": "texto", "url": "https://www.pronabec.gob.pe/concursos-becas-creditos/", "estado": "verificada"},
+    {"id": "pronabec-cooperacion", "nombre": "PRONABEC · becas de cooperación internacional", "tipo": "vigilada", "modo": "texto", "url": "https://www.gob.pe/665-becas-de-cooperacion-internacional", "estado": "verificada"},
+    {"id": "pronabec-bicentenario", "nombre": "PRONABEC · Beca Generación Bicentenario", "tipo": "vigilada", "modo": "texto", "url": "https://www.pronabec.gob.pe/beca-generacion-bicentenario/", "estado": "verificada"},
+    {"id": "fulbright-posgrado", "nombre": "Fulbright Perú · beca de posgrado", "tipo": "vigilada", "modo": "texto", "url": "https://www.fulbright.pe/becaposgradofulbright", "estado": "verificada"},
+    {"id": "fundacion-carolina", "nombre": "Fundación Carolina · formación y becas", "tipo": "vigilada", "modo": "texto", "url": "https://www.fundacioncarolina.es/formacion/formacion-y-becas-de-la-fundacion-carolina/", "estado": "verificada"},
+    {"id": "oea-becas", "nombre": "OEA · becas académicas", "tipo": "vigilada", "modo": "texto", "url": "https://www.oas.org/es/becas/Programa_Becas_Academicas_OEA_2026.asp", "estado": "verificada"},
+    {"id": "proinversion-peu", "nombre": "ProInversión · Programa de Extensión Universitaria", "tipo": "vigilada", "modo": "texto", "url": "https://siga.proinversion.gob.pe/FichaPEU", "estado": "verificada"},
+    {"id": "osinergmin-peu", "nombre": "Osinergmin · becas del programa de extensión", "tipo": "vigilada", "modo": "texto", "url": "https://becas.osinergmin.gob.pe/", "estado": "verificada"},
+    {"id": "osiptel-peu", "nombre": "OSIPTEL · beca del programa de extensión", "tipo": "vigilada", "modo": "texto", "url": "https://beca.osiptel.gob.pe/", "estado": "verificada"},
+    {"id": "uni-pit", "nombre": "UNI · cursos gratuitos (Programa de Iniciación Tecnológica)", "tipo": "vigilada", "modo": "texto", "url": "https://cursosgratuitos.uni.edu.pe/", "estado": "verificada"},
+    {"id": "senaju-voluntariado", "nombre": "SENAJU · voluntariado juvenil", "tipo": "vigilada", "modo": "texto", "url": "https://juventud.gob.pe/programa-de-voluntariado-juvenil/", "estado": "verificada"},
+    {"id": "unicef-pasantias", "nombre": "UNICEF · programa de pasantías", "tipo": "vigilada", "modo": "texto", "url": "https://www.unicef.org/careers/internships", "estado": "verificada"},
+    {"id": "prociencia", "nombre": "PROCIENCIA · convocatorias de ciencia y tecnología", "tipo": "vigilada", "modo": "texto", "url": "https://prociencia.gob.pe/", "estado": "verificada"}
+  ],
+  "no_se_pueden_revisar_solas": [
+    {"nombre": "DAAD (becas de Alemania) y PNUD (programas de talento)", "motivo": "Sus páginas responden 403: bloquean programas automáticos. No se debe saltar."},
+    {"nombre": "Gates Cambridge y Erasmus Mundus", "motivo": "Su contenido se arma con JavaScript: el bot no ve las fechas. Se revisan a mano cada mes."},
+    {"nombre": "Chevening y la ENAP", "motivo": "Tardaron demasiado en responder en la prueba (pueden funcionar otro día); la ENAP además publica sus cursos en la página de SERVIR de gob.pe, que sí se revisa."},
+    {"nombre": "Coursera, edX, Udemy, Google, Microsoft, IBM…", "motivo": "Son plataformas privadas con términos de uso que prohíben copiar su catálogo. Los cursos gratuitos más útiles ya están cargados a mano en la sección."},
+    {"nombre": "Universidades privadas e institutos", "motivo": "Cada uno publica distinto y no hay una lista oficial única. Se pueden sumar uno a uno como página vigilada."}
+  ]
+}
