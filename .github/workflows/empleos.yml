@@ -4,6 +4,8 @@ on:
     - cron: '0 5 * * *'   # 00:00 de Perú
   workflow_dispatch:
 concurrency: { group: bot-empleos, cancel-in-progress: false }
+permissions:
+  contents: write   # para guardar la memoria del bot en el repositorio
 jobs:
   correr:
     uses: ./.github/workflows/_correr-bot.yml

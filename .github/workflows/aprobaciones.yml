@@ -6,6 +6,8 @@ on:
   push:   # también al subir cambios (sirve de prueba rápida); los commits de memoria de los bots no lo disparan
     branches: [main]
 concurrency: { group: bot-cursos, cancel-in-progress: false }
+permissions:
+  contents: write   # para guardar la memoria del bot en el repositorio
 jobs:
   correr:
     uses: ./.github/workflows/_correr-bot.yml
