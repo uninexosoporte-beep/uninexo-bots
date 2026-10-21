@@ -1,0 +1,13 @@
+name: Bot Preu (semanal)
+on:
+  schedule:
+    - cron: '0 13 * * 1'   # lunes 08:00 de Perú: Beca 18, concursos del PRONABEC y enlaces oficiales
+  workflow_dispatch:
+concurrency: { group: bot-preu, cancel-in-progress: false }
+permissions:
+  contents: write   # para guardar la memoria del bot en el repositorio
+jobs:
+  correr:
+    uses: ./.github/workflows/_correr-bot.yml
+    with: { carpeta: preu, minutos: 20 }
+    secrets: inherit

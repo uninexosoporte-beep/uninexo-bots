@@ -72757,14 +72757,19 @@ var limiteEnvios2 = crearLimiteDiario("uninexo_empleos_envios", MAX_ENVIOS_POR_D
 
 // src/utils/publicadorEmpleosBot.ts
 var hoyPeru = (ahora = Date.now()) => new Date(ahora - 5 * 36e5).toISOString().slice(0, 10);
+function valorFirestore(k, v) {
+  if (typeof v === "string") return { stringValue: v };
+  if (typeof v === "boolean") return { booleanValue: v };
+  if (typeof v === "number") return Number.isInteger(v) ? { integerValue: String(v) } : { doubleValue: v };
+  if (Array.isArray(v)) return { arrayValue: { values: v.map((x) => valorFirestore(k, x)) } };
+  if (v && typeof v === "object") return { mapValue: { fields: aFirestore(v) } };
+  throw new Error(`Campo \xAB${k}\xBB con un tipo que el publicador no sabe guardar.`);
+}
 function aFirestore(d) {
   const campos = {};
   for (const [k, v] of Object.entries(d)) {
     if (v === void 0) continue;
-    if (typeof v === "string") campos[k] = { stringValue: v };
-    else if (typeof v === "boolean") campos[k] = { booleanValue: v };
-    else if (typeof v === "number") campos[k] = Number.isInteger(v) ? { integerValue: String(v) } : { doubleValue: v };
-    else throw new Error(`Campo \xAB${k}\xBB con un tipo que el publicador no sabe guardar.`);
+    campos[k] = valorFirestore(k, v);
   }
   return campos;
 }
@@ -75390,6 +75395,469 @@ var sinTildes = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 var slugCarrera = (etiqueta) => sinTildes(etiqueta).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 var CARRERAS_SEO = AREAS_COMUNIDADES.map((a) => ({ area: a.id, nombre: a.etiqueta, slug: slugCarrera(a.etiqueta) }));
 
+// src/data/carrerasCatalogo.ts
+var EDU = ["educacion", "pedagog", "docente", "magisterio"];
+var SALUD = ["salud", "medicina", "clinic", "hospital"];
+var ING = ["ingenieria"];
+var CARRERAS_CATALOGO = [
+  // Educación
+  { id: "educacion-inicial", nombre: "Educaci\xF3n Inicial", area: "Educaci\xF3n", especificas: ["inicial", "primera infancia", "parvul"], campo: EDU },
+  { id: "educacion-primaria", nombre: "Educaci\xF3n Primaria", area: "Educaci\xF3n", especificas: ["primaria"], campo: EDU },
+  { id: "educacion-secundaria", nombre: "Educaci\xF3n Secundaria", area: "Educaci\xF3n", especificas: ["educacion secundaria", "docentes de secundaria"], campo: EDU },
+  { id: "educacion-especial", nombre: "Educaci\xF3n Especial", area: "Educaci\xF3n", especificas: ["educacion especial", "inclusiv", "necesidades educativas"], campo: EDU },
+  { id: "educacion-fisica", nombre: "Educaci\xF3n F\xEDsica", area: "Educaci\xF3n", especificas: ["educacion fisica", "deporte"], campo: EDU },
+  // Salud
+  { id: "medicina-humana", nombre: "Medicina Humana", area: "Salud", especificas: ["medicina humana", "medico"], campo: SALUD },
+  { id: "enfermeria", nombre: "Enfermer\xEDa", area: "Salud", especificas: ["enfermer"], campo: SALUD },
+  { id: "obstetricia", nombre: "Obstetricia", area: "Salud", especificas: ["obstetric"], campo: SALUD },
+  { id: "odontologia", nombre: "Odontolog\xEDa", area: "Salud", especificas: ["odontolog", "estomatolog", "dental"], campo: SALUD },
+  { id: "farmacia-bioquimica", nombre: "Farmacia y Bioqu\xEDmica", area: "Salud", especificas: ["farmac", "bioquim"], campo: SALUD },
+  { id: "nutricion", nombre: "Nutrici\xF3n", area: "Salud", especificas: ["nutric", "dietet"], campo: SALUD },
+  { id: "tecnologia-medica", nombre: "Tecnolog\xEDa M\xE9dica", area: "Salud", especificas: ["tecnologia medica", "laboratorio clinico", "terapia"], campo: SALUD },
+  { id: "psicologia", nombre: "Psicolog\xEDa", area: "Psicolog\xEDa", especificas: ["psicolog"], campo: ["psicolog", "salud mental"] },
+  // Derecho, política y gestión pública
+  { id: "derecho", nombre: "Derecho", area: "Derecho y Ciencias Pol\xEDticas", especificas: ["derecho", "abogad", "juridic"], campo: ["derecho", "ciencia politica", "juridic", "legal"] },
+  { id: "ciencia-politica", nombre: "Ciencia Pol\xEDtica", area: "Derecho y Ciencias Pol\xEDticas", especificas: ["ciencia politica", "politolog"], campo: ["derecho", "ciencia politica", "politica"] },
+  { id: "gestion-publica", nombre: "Gesti\xF3n P\xFAblica", area: "Gesti\xF3n P\xFAblica", especificas: ["gestion publica", "administracion publica"], campo: ["gestion publica", "sector publico", "administracion publica"] },
+  // Negocios, finanzas, comunicación
+  { id: "administracion", nombre: "Administraci\xF3n", area: "Administraci\xF3n y Negocios", especificas: ["administracion"], campo: ["administracion", "negocios", "empresa", "gestion"] },
+  { id: "negocios-internacionales", nombre: "Negocios Internacionales", area: "Administraci\xF3n y Negocios", especificas: ["negocios internacionales", "comercio exterior", "aduan"], campo: ["administracion", "negocios", "comercio"] },
+  { id: "contabilidad", nombre: "Contabilidad", area: "Contabilidad y Finanzas", especificas: ["contab", "auditor", "tributar"], campo: ["contab", "finanzas", "tribut", "auditoria"] },
+  { id: "economia", nombre: "Econom\xEDa", area: "Econom\xEDa", especificas: ["econom"], campo: ["econom", "finanzas"] },
+  { id: "comunicacion", nombre: "Ciencias de la Comunicaci\xF3n", area: "Comunicaci\xF3n y Marketing", especificas: ["comunicacion", "periodis", "audiovisual"], campo: ["comunicacion", "marketing", "publicidad", "medios"] },
+  { id: "marketing", nombre: "Marketing", area: "Comunicaci\xF3n y Marketing", especificas: ["marketing", "publicidad"], campo: ["marketing", "comunicacion", "publicidad", "ventas"] },
+  // Ingenierías
+  { id: "ing-civil", nombre: "Ingenier\xEDa Civil", area: "Ingenier\xEDa", especificas: ["civil"], campo: [...ING, "construccion"] },
+  { id: "ing-industrial", nombre: "Ingenier\xEDa Industrial", area: "Ingenier\xEDa", especificas: ["industrial"], campo: ING },
+  { id: "ing-mecanica", nombre: "Ingenier\xEDa Mec\xE1nica", area: "Ingenier\xEDa", especificas: ["mecanic"], campo: ING },
+  { id: "ing-electrica", nombre: "Ingenier\xEDa El\xE9ctrica", area: "Ingenier\xEDa", especificas: ["electric"], campo: ING },
+  { id: "ing-electronica", nombre: "Ingenier\xEDa Electr\xF3nica", area: "Ingenier\xEDa", especificas: ["electronic", "telecomunic"], campo: ING },
+  { id: "ing-minas", nombre: "Ingenier\xEDa de Minas", area: "Ingenier\xEDa", especificas: ["minas", "minera", "minero", "geolog", "metalurg"], campo: ING },
+  { id: "ing-quimica", nombre: "Ingenier\xEDa Qu\xEDmica", area: "Ingenier\xEDa", especificas: ["quimic"], campo: ING },
+  { id: "ing-mecatronica", nombre: "Ingenier\xEDa Mecatr\xF3nica", area: "Ingenier\xEDa", especificas: ["mecatronic", "robotic", "automatizacion"], campo: ING },
+  { id: "ing-alimentaria", nombre: "Ingenier\xEDa de Industrias Alimentarias", area: "Ingenier\xEDa", especificas: ["alimentari", "agroindustri", "alimentos"], campo: [...ING, "agro"] },
+  { id: "ing-pesquera", nombre: "Ingenier\xEDa Pesquera", area: "Ingenier\xEDa", especificas: ["pesquer", "acuicultura"], campo: [...ING, "agro"] },
+  // Tecnología
+  { id: "ing-sistemas", nombre: "Ingenier\xEDa de Sistemas", area: "Tecnolog\xEDa e Inform\xE1tica", especificas: ["sistemas", "informatic", "computacion", "software", "programacion"], campo: ["tecnologia", "sistemas", "informatic", "software", "ciberseguridad", "datos"] },
+  { id: "ing-software", nombre: "Ingenier\xEDa de Software", area: "Tecnolog\xEDa e Inform\xE1tica", especificas: ["software", "programacion", "desarrollo"], campo: ["tecnologia", "sistemas", "informatic", "software", "programacion", "computacion"] },
+  // Arquitectura
+  { id: "arquitectura", nombre: "Arquitectura", area: "Arquitectura y Construcci\xF3n", especificas: ["arquitect", "urbanis"], campo: ["arquitect", "construccion", "urbanis"] },
+  // Agro y ambiente
+  { id: "ing-ambiental", nombre: "Ingenier\xEDa Ambiental", area: "Agropecuaria y Ambiente", especificas: ["ambiental", "medio ambiente", "ecolog"], campo: ["ambient", "agro", "forestal", "agrar", "agricol", "pecuari", "zootecn", "veterinari", "recursos naturales"] },
+  { id: "agronomia", nombre: "Ingenier\xEDa Agron\xF3mica", area: "Agropecuaria y Ambiente", especificas: ["agronom", "agricol", "agrar", "agropecuari"], campo: ["ambient", "agro", "forestal", "agrar", "agricol", "pecuari", "zootecn", "veterinari"] },
+  { id: "ing-forestal", nombre: "Ingenier\xEDa Forestal", area: "Agropecuaria y Ambiente", especificas: ["forestal"], campo: ["ambient", "agro", "forestal", "recursos naturales"] },
+  { id: "veterinaria", nombre: "Medicina Veterinaria y Zootecnia", area: "Agropecuaria y Ambiente", especificas: ["veterinari", "zootecn"], campo: ["agro", "pecuari", "zootecn", "veterinari"] },
+  // Turismo
+  { id: "turismo", nombre: "Turismo y Hoteler\xEDa", area: "Turismo y Hoteler\xEDa", especificas: ["turismo", "hotel"], campo: ["turismo", "hotel", "gastronom"] },
+  { id: "gastronomia", nombre: "Gastronom\xEDa", area: "Turismo y Hoteler\xEDa", especificas: ["gastronom", "cocina"], campo: ["turismo", "hotel", "gastronom"] },
+  // Ciencias sociales
+  { id: "trabajo-social", nombre: "Trabajo Social", area: "Ciencias Sociales y Humanidades", especificas: ["trabajo social"], campo: ["ciencias sociales", "sociolog", "antropolog"] },
+  { id: "sociologia", nombre: "Sociolog\xEDa", area: "Ciencias Sociales y Humanidades", especificas: ["sociolog"], campo: ["ciencias sociales", "trabajo social", "antropolog"] },
+  { id: "antropologia", nombre: "Antropolog\xEDa", area: "Ciencias Sociales y Humanidades", especificas: ["antropolog"], campo: ["ciencias sociales", "sociolog", "arqueolog"] },
+  { id: "historia", nombre: "Historia", area: "Ciencias Sociales y Humanidades", especificas: ["historia"], campo: ["ciencias sociales", "filosof", "arqueolog"] },
+  // Ciencias básicas
+  { id: "matematica", nombre: "Matem\xE1tica", area: "Ciencias B\xE1sicas", especificas: ["matematic"], campo: ["matematic", "estadist", "fisica"] },
+  { id: "fisica", nombre: "F\xEDsica", area: "Ciencias B\xE1sicas", especificas: ["fisica"], campo: ["matematic", "quimica", "fisica"] },
+  { id: "quimica", nombre: "Qu\xEDmica", area: "Ciencias B\xE1sicas", especificas: ["quimica"], campo: ["quimic", "fisica", "biolog"] },
+  { id: "biologia", nombre: "Biolog\xEDa", area: "Ciencias B\xE1sicas", especificas: ["biolog"], campo: ["biolog", "quimica", "salud"] },
+  { id: "estadistica", nombre: "Estad\xEDstica", area: "Ciencias B\xE1sicas", especificas: ["estadist"], campo: ["matematic", "estadist", "datos"] },
+  // Arte e idiomas
+  { id: "diseno-grafico", nombre: "Dise\xF1o Gr\xE1fico", area: "Arte y Dise\xF1o", especificas: ["diseno", "grafico"], campo: ["arte", "diseno"] },
+  { id: "artes-musica", nombre: "M\xFAsica y Artes", area: "Arte y Dise\xF1o", especificas: ["musica", "artes"], campo: ["arte", "diseno", "musica"] },
+  { id: "idiomas", nombre: "Idiomas y Traducci\xF3n", area: "Idiomas", especificas: ["idioma", "traduc", "ingles"], campo: ["idioma", "lengua", "ingles"] }
+];
+var CARRERA_POR_ID = new Map(CARRERAS_CATALOGO.map((c) => [c.id, c]));
+
+// src/data/preuCarreras.ts
+var FICHAS_PREU = {
+  // Educación
+  "educacion-inicial": {
+    oferta: /inicial/,
+    queEstudias: "C\xF3mo aprenden y se desarrollan los ni\xF1os de 0 a 5 a\xF1os y c\xF3mo ense\xF1arles jugando: lenguaje, n\xFAmeros, arte, psicomotricidad y valores.",
+    temas: ["Desarrollo infantil", "Psicomotricidad", "Literatura infantil", "Did\xE1ctica del juego", "Pr\xE1cticas en cunas y jardines"],
+    trabajas: "Cunas, jardines y PRONOEI p\xFAblicos y privados, programas de primera infancia, estimulaci\xF3n temprana o tu propio centro.",
+    teGustaSi: "Tienes paciencia, te gusta estar con ni\xF1os peque\xF1os y eres creativo con manualidades, canciones y juegos."
+  },
+  "educacion-primaria": {
+    oferta: /primaria/,
+    queEstudias: "C\xF3mo ense\xF1ar a ni\xF1os de 6 a 11 a\xF1os todas las \xE1reas del colegio: comunicaci\xF3n, matem\xE1tica, ciencia, personal social y arte.",
+    temas: ["Psicolog\xEDa del aprendizaje", "Did\xE1ctica de la matem\xE1tica", "Did\xE1ctica de la comunicaci\xF3n", "Evaluaci\xF3n", "Pr\xE1cticas en aula"],
+    trabajas: "Colegios p\xFAblicos (por concurso del MINEDU) y privados, refuerzo escolar, ONG educativas y materiales educativos.",
+    teGustaSi: "Te gusta explicar, tienes paciencia y quieres que los ni\xF1os aprendan a leer, escribir y pensar."
+  },
+  "educacion-secundaria": {
+    oferta: /educacion secundaria/,
+    queEstudias: "Una especialidad para ense\xF1ar a adolescentes (matem\xE1tica, lengua y literatura, ciencias, historia, ingl\xE9s\u2026) y c\xF3mo ense\xF1arla bien.",
+    temas: ["La especialidad que elijas", "Psicolog\xEDa del adolescente", "Did\xE1ctica", "Tutor\xEDa", "Pr\xE1cticas en colegios"],
+    trabajas: "Colegios p\xFAblicos y privados, academias y CEPRE, institutos y elaboraci\xF3n de material educativo.",
+    teGustaSi: "Te encanta un curso del colegio y te imaginas explic\xE1ndolo a otros."
+  },
+  "educacion-especial": {
+    oferta: /especial|problemas de aprendizaje/,
+    queEstudias: "C\xF3mo ense\xF1ar y acompa\xF1ar a estudiantes con discapacidad o necesidades educativas especiales, y c\xF3mo hacer la escuela inclusiva.",
+    temas: ["Discapacidad y desarrollo", "Lengua de se\xF1as y braille", "Problemas de aprendizaje", "Adaptaciones curriculares"],
+    trabajas: "CEBE, programas SAANEE, colegios inclusivos, centros de terapia y ONG.",
+    teGustaSi: "Eres muy paciente, emp\xE1tico y te importa que nadie se quede atr\xE1s."
+  },
+  "educacion-fisica": {
+    oferta: /educacion fisica/,
+    queEstudias: "El cuerpo en movimiento y c\xF3mo ense\xF1ar deporte, juego y vida saludable a ni\xF1os y j\xF3venes.",
+    temas: ["Anatom\xEDa y fisiolog\xEDa del ejercicio", "Psicomotricidad", "Deportes", "Did\xE1ctica de la educaci\xF3n f\xEDsica"],
+    trabajas: "Colegios, clubes y escuelas deportivas, gimnasios, municipalidades y el IPD.",
+    teGustaSi: "Te gusta el deporte y te ves ense\xF1\xE1ndolo y entrenando a otros."
+  },
+  // Salud
+  "medicina-humana": {
+    oferta: /^medicina( humana)?$/,
+    queEstudias: "C\xF3mo funciona el cuerpo humano, por qu\xE9 se enferma y c\xF3mo diagnosticar y tratar a las personas. Es la carrera m\xE1s larga: unos 7 a\xF1os con el internado.",
+    temas: ["Anatom\xEDa", "Bioqu\xEDmica", "Fisiolog\xEDa", "Farmacolog\xEDa", "Internado en hospitales"],
+    trabajas: "Hospitales y centros de salud (al terminar se hace el SERUMS), cl\xEDnicas, consultorio propio y, con el residentado, una especialidad.",
+    teGustaSi: "Te va bien en biolog\xEDa y qu\xEDmica, aguantas mucho estudio y quieres ayudar a la gente cuando est\xE1 enferma."
+  },
+  "enfermeria": {
+    oferta: /enfermer/,
+    queEstudias: "Cuidar la salud de las personas en todas las etapas de la vida: atenci\xF3n al paciente, prevenci\xF3n y promoci\xF3n de la salud.",
+    temas: ["Anatom\xEDa y fisiolog\xEDa", "Enfermer\xEDa b\xE1sica", "Farmacolog\xEDa", "Salud comunitaria", "Pr\xE1cticas hospitalarias"],
+    trabajas: "Hospitales, centros de salud, cl\xEDnicas, atenci\xF3n en casa y salud ocupacional en empresas.",
+    teGustaSi: "Eres responsable, tranquilo en emergencias y te gusta cuidar a otros."
+  },
+  "obstetricia": {
+    oferta: /obstetric/,
+    queEstudias: "La salud de la mujer, el embarazo, el parto y la salud sexual y reproductiva.",
+    temas: ["Anatom\xEDa", "Obstetricia", "Salud sexual y reproductiva", "Psicoprofilaxis", "Pr\xE1cticas en centros de salud"],
+    trabajas: "Hospitales, centros de salud, cl\xEDnicas y programas de salud materna y planificaci\xF3n familiar.",
+    teGustaSi: "Te interesa la salud de la mujer y del beb\xE9 y sabes escuchar."
+  },
+  "odontologia": {
+    oferta: /odontolog|estomatolog/,
+    queEstudias: "La salud de la boca y los dientes: prevenir, diagnosticar y tratar sus enfermedades.",
+    temas: ["Anatom\xEDa de cabeza y cuello", "Materiales dentales", "Operatoria", "Ortodoncia", "Cl\xEDnica con pacientes"],
+    trabajas: "Consultorio propio o de otros, cl\xEDnicas, centros de salud del Estado y, con especialidad, ortodoncia, cirug\xEDa y m\xE1s.",
+    teGustaSi: "Tienes buena mano para trabajos de precisi\xF3n y te gusta la salud."
+  },
+  "farmacia-bioquimica": {
+    oferta: /farmac/,
+    queEstudias: "Los medicamentos: c\xF3mo se fabrican, c\xF3mo act\xFAan en el cuerpo y c\xF3mo usarlos de forma segura.",
+    temas: ["Qu\xEDmica org\xE1nica", "Farmacolog\xEDa", "Tecnolog\xEDa farmac\xE9utica", "An\xE1lisis cl\xEDnico", "Toxicolog\xEDa"],
+    trabajas: "Farmacias y boticas, laboratorios farmac\xE9uticos, hospitales, control de calidad y DIGEMID.",
+    teGustaSi: "Te gusta la qu\xEDmica y la biolog\xEDa y eres ordenado y detallista."
+  },
+  "nutricion": {
+    oferta: /nutric|dietet/,
+    queEstudias: "Los alimentos y su efecto en la salud: c\xF3mo planificar la alimentaci\xF3n de personas y comunidades.",
+    temas: ["Bioqu\xEDmica", "Nutrici\xF3n humana", "Dietoterapia", "Nutrici\xF3n p\xFAblica", "Tecnolog\xEDa de alimentos"],
+    trabajas: "Hospitales, consultorio, programas sociales de alimentaci\xF3n, industria de alimentos y deporte.",
+    teGustaSi: "Te interesa la comida sana, la salud y ayudar a otros a cambiar h\xE1bitos."
+  },
+  "tecnologia-medica": {
+    oferta: /tecnologia medica|^terapia fisica/,
+    queEstudias: "Una especialidad t\xE9cnica de la salud: laboratorio cl\xEDnico, radiolog\xEDa, terapia f\xEDsica, terapia de lenguaje u ocupacional.",
+    temas: ["Anatom\xEDa", "Fisiolog\xEDa", "La especialidad que elijas", "Equipos m\xE9dicos", "Pr\xE1cticas cl\xEDnicas"],
+    trabajas: "Hospitales, cl\xEDnicas, laboratorios, centros de rehabilitaci\xF3n y de im\xE1genes.",
+    teGustaSi: "Te gusta la salud y trabajar con equipos, an\xE1lisis o rehabilitaci\xF3n."
+  },
+  "psicologia": {
+    oferta: /^psicolog/,
+    queEstudias: "C\xF3mo piensan, sienten y se comportan las personas, y c\xF3mo ayudarlas en su salud mental, su aprendizaje o su trabajo.",
+    temas: ["Procesos psicol\xF3gicos", "Psicolog\xEDa del desarrollo", "Evaluaci\xF3n psicol\xF3gica", "Estad\xEDstica", "Psicoterapia"],
+    trabajas: "Centros de salud mental, colegios, empresas (recursos humanos), consultorio, ONG y el sistema de justicia.",
+    teGustaSi: "Sabes escuchar, te interesan las personas y guardas bien los secretos."
+  },
+  // Derecho, política y gestión pública
+  "derecho": {
+    oferta: /^derecho/,
+    queEstudias: "Las leyes del Per\xFA y c\xF3mo se aplican: derechos de las personas, contratos, delitos, empresas y el Estado.",
+    temas: ["Derecho constitucional", "Derecho civil", "Derecho penal", "Derecho laboral", "Pr\xE1ctica en estudios o juzgados"],
+    trabajas: "Estudios de abogados, Poder Judicial, Ministerio P\xFAblico, entidades del Estado, empresas o tu propio estudio.",
+    teGustaSi: "Te gusta leer, argumentar, debatir y defender lo que es justo."
+  },
+  "ciencia-politica": {
+    oferta: /ciencia politica/,
+    queEstudias: "C\xF3mo funcionan el poder, el Estado, los partidos y las pol\xEDticas p\xFAblicas.",
+    temas: ["Teor\xEDa pol\xEDtica", "Sistema pol\xEDtico peruano", "Pol\xEDticas p\xFAblicas", "M\xE9todos de investigaci\xF3n"],
+    trabajas: "Entidades del Estado, Congreso, organismos internacionales, ONG, consultoras y medios.",
+    teGustaSi: "Sigues las noticias de pol\xEDtica y quieres entender por qu\xE9 pasan las cosas en el pa\xEDs."
+  },
+  "gestion-publica": {
+    oferta: /administracion publica|gestion publica/,
+    queEstudias: "C\xF3mo se gestiona el Estado: presupuesto, proyectos de inversi\xF3n, contrataciones y servicios para el ciudadano.",
+    temas: ["Gesti\xF3n p\xFAblica", "Presupuesto p\xFAblico", "Proyectos de inversi\xF3n", "Contrataciones del Estado"],
+    trabajas: "Municipalidades, gobiernos regionales, ministerios y consultoras que trabajan con el Estado.",
+    teGustaSi: "Quieres mejorar tu regi\xF3n y te interesa c\xF3mo se usa el dinero p\xFAblico."
+  },
+  // Negocios, finanzas, comunicación
+  "administracion": {
+    oferta: /^administracion(?! publica)(?!.*turis)(?!.*hotel)|^ingenieria comercial|gestion empresarial/,
+    queEstudias: "C\xF3mo dirigir una empresa o instituci\xF3n: personas, dinero, marketing, operaciones y estrategia.",
+    temas: ["Administraci\xF3n general", "Contabilidad", "Marketing", "Finanzas", "Recursos humanos"],
+    trabajas: "Empresas de todo tipo, bancos, el Estado o tu propio negocio.",
+    teGustaSi: "Te gusta organizar, liderar equipos o tienes ideas de negocio."
+  },
+  "negocios-internacionales": {
+    oferta: /negocios (internacionales|globales)|comercio exterior/,
+    queEstudias: "C\xF3mo comprar y vender entre pa\xEDses: exportaci\xF3n, importaci\xF3n, aduanas, log\xEDstica y comercio internacional.",
+    temas: ["Comercio internacional", "Aduanas", "Log\xEDstica", "Marketing internacional", "Idiomas"],
+    trabajas: "Empresas exportadoras e importadoras, agencias de aduanas, navieras, PROMPER\xDA y tu propio negocio.",
+    teGustaSi: "Te interesan otros pa\xEDses, los idiomas y los negocios."
+  },
+  "contabilidad": {
+    oferta: /contab|tributari|^finanzas$|banca y seguros/,
+    queEstudias: "C\xF3mo registrar y analizar el dinero de empresas e instituciones, pagar impuestos y controlar que todo est\xE9 en orden.",
+    temas: ["Contabilidad general", "Tributaci\xF3n", "Costos", "Auditor\xEDa", "Finanzas"],
+    trabajas: "Empresas, estudios contables, bancos, SUNAT, entidades del Estado o tu propio estudio.",
+    teGustaSi: "Eres ordenado, te gustan los n\xFAmeros y eres de confianza."
+  },
+  "economia": {
+    oferta: /^economia|ingenieria economica/,
+    queEstudias: "C\xF3mo las personas, las empresas y los pa\xEDses usan sus recursos: precios, empleo, crecimiento y pol\xEDticas econ\xF3micas.",
+    temas: ["Microeconom\xEDa", "Macroeconom\xEDa", "Matem\xE1tica", "Estad\xEDstica y econometr\xEDa", "Econom\xEDa peruana"],
+    trabajas: "Bancos, BCRP, MEF y otras entidades del Estado, consultoras, empresas y organismos internacionales.",
+    teGustaSi: "Te va bien en matem\xE1tica y te preguntas por qu\xE9 suben los precios o por qu\xE9 hay pobreza."
+  },
+  "comunicacion": {
+    oferta: /^(ciencias de la )?comunicacion(?!.*telecom)|^comunicaciones|periodis|audiovisual/,
+    queEstudias: "C\xF3mo crear y transmitir mensajes: periodismo, producci\xF3n audiovisual, comunicaci\xF3n de empresas y redes sociales.",
+    temas: ["Redacci\xF3n", "Fotograf\xEDa y video", "Periodismo", "Comunicaci\xF3n corporativa", "Medios digitales"],
+    trabajas: "Medios de comunicaci\xF3n, agencias, \xE1reas de comunicaci\xF3n de empresas y del Estado, productoras o por tu cuenta.",
+    teGustaSi: "Te gusta escribir, grabar, hablar en p\xFAblico o crear contenido."
+  },
+  "marketing": {
+    oferta: /marketing/,
+    queEstudias: "C\xF3mo entender al cliente y lograr que una marca o producto se conozca y se venda.",
+    temas: ["Investigaci\xF3n de mercados", "Comportamiento del consumidor", "Marketing digital", "Publicidad", "Ventas"],
+    trabajas: "Empresas, agencias de publicidad y marketing digital, emprendimientos propios.",
+    teGustaSi: "Eres creativo, te fijas en la publicidad y te gustan las redes sociales."
+  },
+  // Ingenierías
+  "ing-civil": {
+    oferta: /ingenieria civil|construccion civil/,
+    queEstudias: "C\xF3mo dise\xF1ar y construir obras: edificios, carreteras, puentes, canales y sistemas de agua.",
+    temas: ["Matem\xE1tica y f\xEDsica", "Resistencia de materiales", "An\xE1lisis estructural", "Concreto armado", "Hidr\xE1ulica"],
+    trabajas: "Constructoras, consultoras, municipalidades y gobiernos regionales, supervisi\xF3n de obras.",
+    teGustaSi: "Te va bien en matem\xE1tica y f\xEDsica y te imaginas viendo crecer una obra."
+  },
+  "ing-industrial": {
+    oferta: /^ingenieria industrial|seguridad industrial/,
+    queEstudias: "C\xF3mo hacer que una empresa produzca m\xE1s y mejor: procesos, calidad, log\xEDstica, costos y seguridad.",
+    temas: ["Matem\xE1tica", "Procesos de manufactura", "Investigaci\xF3n de operaciones", "Gesti\xF3n de calidad", "Log\xEDstica"],
+    trabajas: "F\xE1bricas, empresas de servicios, log\xEDstica, bancos, miner\xEDa y consultoras.",
+    teGustaSi: "Te gusta organizar, mejorar c\xF3mo se hacen las cosas y los n\xFAmeros."
+  },
+  "ing-mecanica": {
+    oferta: /mecanic/,
+    queEstudias: "C\xF3mo dise\xF1ar, construir y mantener m\xE1quinas, motores y equipos.",
+    temas: ["F\xEDsica", "Dibujo mec\xE1nico", "Termodin\xE1mica", "Mec\xE1nica de fluidos", "Dise\xF1o de m\xE1quinas"],
+    trabajas: "Miner\xEDa, industria, energ\xEDa, mantenimiento de equipos y empresas automotrices.",
+    teGustaSi: "Te gusta desarmar cosas para ver c\xF3mo funcionan."
+  },
+  "ing-electrica": {
+    oferta: /electric/,
+    queEstudias: "C\xF3mo se genera, transporta y usa la energ\xEDa el\xE9ctrica, de la central a tu casa.",
+    temas: ["F\xEDsica", "Circuitos el\xE9ctricos", "M\xE1quinas el\xE9ctricas", "Sistemas de potencia", "Instalaciones"],
+    trabajas: "Empresas el\xE9ctricas, miner\xEDa, industria, construcci\xF3n y proyectos de energ\xEDa renovable.",
+    teGustaSi: "Te va bien en f\xEDsica y te interesa la energ\xEDa."
+  },
+  "ing-electronica": {
+    oferta: /electronic|telecomunic/,
+    queEstudias: "Los circuitos y dispositivos electr\xF3nicos y c\xF3mo se comunican: control, automatizaci\xF3n y telecomunicaciones.",
+    temas: ["F\xEDsica", "Circuitos", "Electr\xF3nica digital", "Microcontroladores", "Telecomunicaciones"],
+    trabajas: "Telecomunicaciones, industria, miner\xEDa, automatizaci\xF3n y empresas de tecnolog\xEDa.",
+    teGustaSi: "Te gusta armar circuitos, la tecnolog\xEDa y entender c\xF3mo funciona tu celular."
+  },
+  "ing-mecatronica": {
+    oferta: /mecatronic/,
+    queEstudias: "Mec\xE1nica, electr\xF3nica y programaci\xF3n juntas para crear robots y m\xE1quinas autom\xE1ticas.",
+    temas: ["F\xEDsica", "Programaci\xF3n", "Electr\xF3nica", "Control autom\xE1tico", "Rob\xF3tica"],
+    trabajas: "Industria, miner\xEDa, automatizaci\xF3n de procesos y empresas de tecnolog\xEDa.",
+    teGustaSi: "Te gustan los robots y quieres combinar programaci\xF3n con m\xE1quinas."
+  },
+  "ing-minas": {
+    oferta: /minas|geolog|metalurg/,
+    queEstudias: "C\xF3mo encontrar, extraer y procesar minerales de forma segura y responsable con el ambiente.",
+    temas: ["Geolog\xEDa", "Topograf\xEDa", "Explotaci\xF3n de minas", "Seguridad minera", "Metalurgia"],
+    trabajas: "Empresas mineras, contratistas, consultoras ambientales, INGEMMET y el Estado.",
+    teGustaSi: "Te gusta el trabajo de campo, la geograf\xEDa y no te asusta trabajar lejos de la ciudad."
+  },
+  "ing-quimica": {
+    oferta: /^ingenieria (quimica|petroquimica)/,
+    queEstudias: "C\xF3mo transformar materias primas en productos \xFAtiles a gran escala: alimentos, combustibles, pl\xE1sticos, medicinas.",
+    temas: ["Qu\xEDmica", "Matem\xE1tica", "Termodin\xE1mica", "Operaciones unitarias", "Procesos industriales"],
+    trabajas: "Industria qu\xEDmica, de alimentos, petr\xF3leo y gas, miner\xEDa, control de calidad y medio ambiente.",
+    teGustaSi: "Te encanta la qu\xEDmica y te imaginas en una planta industrial."
+  },
+  "ing-alimentaria": {
+    oferta: /^(ingenieria (en |de )?)?(industrias? alimentari|alimentos|agroindustri)/,
+    queEstudias: "C\xF3mo transformar productos del campo en alimentos seguros y de calidad: procesos, conservaci\xF3n y control.",
+    temas: ["Qu\xEDmica y biolog\xEDa", "Microbiolog\xEDa de alimentos", "Procesos agroindustriales", "Control de calidad"],
+    trabajas: "Empresas de alimentos y bebidas, agroexportadoras, control de calidad y SENASA.",
+    teGustaSi: "Te interesan la qu\xEDmica, la comida y el campo peruano."
+  },
+  "ing-pesquera": {
+    oferta: /pesquer|acuicultura/,
+    queEstudias: "C\xF3mo aprovechar los recursos del mar y los r\xEDos: pesca, acuicultura y procesamiento de productos hidrobiol\xF3gicos.",
+    temas: ["Biolog\xEDa acu\xE1tica", "Tecnolog\xEDa pesquera", "Acuicultura", "Procesamiento de pescado"],
+    trabajas: "Empresas pesqueras y acu\xEDcolas, plantas de procesamiento, IMARPE y PRODUCE.",
+    teGustaSi: "Te gusta el mar o los r\xEDos y la biolog\xEDa."
+  },
+  // Tecnología
+  "ing-sistemas": {
+    oferta: /sistemas|informatica|computacion/,
+    queEstudias: "C\xF3mo usar la tecnolog\xEDa para resolver problemas: programaci\xF3n, bases de datos, redes y sistemas para empresas.",
+    temas: ["Programaci\xF3n", "Matem\xE1tica discreta", "Bases de datos", "Redes", "Ingenier\xEDa de software"],
+    trabajas: "Empresas de tecnolog\xEDa, bancos, \xE1reas de sistemas de cualquier empresa, el Estado o desde tu casa para el extranjero.",
+    teGustaSi: "Te gusta la computadora, resolver problemas con l\xF3gica y aprender cosas nuevas por tu cuenta."
+  },
+  "ing-software": {
+    oferta: /software/,
+    queEstudias: "C\xF3mo dise\xF1ar, programar y probar aplicaciones y sistemas de calidad.",
+    temas: ["Programaci\xF3n", "Algoritmos", "Bases de datos", "Desarrollo web y m\xF3vil", "Calidad de software"],
+    trabajas: "Empresas de software, startups, bancos o como programador independiente.",
+    teGustaSi: "Te gusta programar o crear apps y p\xE1ginas web."
+  },
+  // Arquitectura
+  "arquitectura": {
+    oferta: /arquitect|urbanis/,
+    queEstudias: "C\xF3mo dise\xF1ar espacios para vivir, estudiar y trabajar: casas, edificios y ciudades.",
+    temas: ["Dibujo y dise\xF1o", "Taller de dise\xF1o", "Historia de la arquitectura", "Construcci\xF3n", "Urbanismo"],
+    trabajas: "Estudios de arquitectura, constructoras e inmobiliarias, municipalidades o tu propio estudio.",
+    teGustaSi: "Dibujas bien, eres creativo y te fijas en c\xF3mo est\xE1n hechos los lugares."
+  },
+  // Agro y ambiente
+  "ing-ambiental": {
+    oferta: /ambiental|medio ambiente|^ecologia$/,
+    queEstudias: "C\xF3mo cuidar el agua, el aire y el suelo: prevenir la contaminaci\xF3n y manejar los recursos naturales.",
+    temas: ["Qu\xEDmica", "Ecolog\xEDa", "Tratamiento de aguas", "Gesti\xF3n ambiental", "Evaluaci\xF3n de impacto ambiental"],
+    trabajas: "Mineras y empresas (\xE1reas ambientales), consultoras, OEFA, MINAM, municipalidades y ONG.",
+    teGustaSi: "Te preocupa el planeta y te gustan la qu\xEDmica y la biolog\xEDa."
+  },
+  "agronomia": {
+    oferta: /agronom|agricol|agropecuari|agroecolog/,
+    queEstudias: "C\xF3mo producir m\xE1s y mejores cultivos cuidando el suelo y el agua.",
+    temas: ["Bot\xE1nica", "Suelos", "Fitopatolog\xEDa", "Riego", "Cultivos"],
+    trabajas: "Agroexportadoras, fundos, SENASA, MIDAGRI, proyectos agrarios o tu propio campo.",
+    teGustaSi: "Te gusta el campo, las plantas y el trabajo al aire libre."
+  },
+  "ing-forestal": {
+    oferta: /forestal/,
+    queEstudias: "C\xF3mo manejar y conservar los bosques y aprovechar la madera y otros recursos de forma sostenible.",
+    temas: ["Dendrolog\xEDa", "Ecolog\xEDa forestal", "Manejo forestal", "Industria de la madera"],
+    trabajas: "SERFOR, concesiones forestales, ONG de conservaci\xF3n, \xE1reas protegidas y la industria de la madera.",
+    teGustaSi: "Te gusta la selva y la naturaleza."
+  },
+  "veterinaria": {
+    oferta: /veterinari|zootecn/,
+    queEstudias: "La salud de los animales (mascotas, ganado y fauna) y c\xF3mo producir alimentos de origen animal.",
+    temas: ["Anatom\xEDa animal", "Fisiolog\xEDa", "Cl\xEDnica de animales menores y mayores", "Producci\xF3n animal"],
+    trabajas: "Veterinarias, granjas y ganader\xEDas, SENASA, industria de alimentos y tu propia cl\xEDnica.",
+    teGustaSi: "Te encantan los animales y la biolog\xEDa."
+  },
+  // Turismo
+  "turismo": {
+    oferta: /turis|hoteler/,
+    queEstudias: "C\xF3mo organizar viajes y atender visitantes: agencias, hoteles, guiado y promoci\xF3n de destinos.",
+    temas: ["Patrimonio tur\xEDstico del Per\xFA", "Gesti\xF3n hotelera", "Agencias de viaje", "Idiomas", "Marketing tur\xEDstico"],
+    trabajas: "Hoteles, agencias de viaje, l\xEDneas a\xE9reas, MINCETUR, PROMPER\xDA o tu propio negocio tur\xEDstico.",
+    teGustaSi: "Te gusta viajar, los idiomas y atender a la gente."
+  },
+  "gastronomia": {
+    oferta: /gastronom|culinari/,
+    queEstudias: "Cocina profesional: t\xE9cnicas, cocina peruana e internacional, pasteler\xEDa y c\xF3mo gestionar un restaurante.",
+    temas: ["T\xE9cnicas culinarias", "Cocina peruana", "Pasteler\xEDa", "Higiene de alimentos", "Gesti\xF3n de restaurantes"],
+    trabajas: "Restaurantes, hoteles, catering, industria de alimentos o tu propio negocio.",
+    teGustaSi: "Te gusta cocinar y no te molesta trabajar de pie y en horarios largos."
+  },
+  // Ciencias sociales
+  "trabajo-social": {
+    oferta: /trabajo social/,
+    queEstudias: "C\xF3mo acompa\xF1ar a personas, familias y comunidades en situaci\xF3n dif\xEDcil y conectarlas con servicios y derechos.",
+    temas: ["Realidad social peruana", "Trabajo con familias", "Pol\xEDticas sociales", "Gesti\xF3n de proyectos sociales"],
+    trabajas: "Hospitales, municipalidades, programas sociales, empresas (bienestar del personal) y ONG.",
+    teGustaSi: "Te importan los problemas de la gente y quieres hacer algo por ellos."
+  },
+  "sociologia": {
+    oferta: /sociolog/,
+    queEstudias: "C\xF3mo funciona la sociedad: grupos, desigualdad, conflictos y cambios sociales, y c\xF3mo investigarlos.",
+    temas: ["Teor\xEDa sociol\xF3gica", "M\xE9todos de investigaci\xF3n", "Estad\xEDstica", "Sociedad peruana"],
+    trabajas: "Investigaci\xF3n, encuestadoras, Estado, ONG, consultoras y docencia.",
+    teGustaSi: "Te preguntas por qu\xE9 la sociedad es como es y te gusta investigar."
+  },
+  "antropologia": {
+    oferta: /antropolog|arqueolog/,
+    queEstudias: "Las culturas humanas de hoy y del pasado; en Arqueolog\xEDa, los restos de las sociedades antiguas.",
+    temas: ["Teor\xEDa antropol\xF3gica", "Etnograf\xEDa", "Culturas del Per\xFA", "Trabajo de campo"],
+    trabajas: "Ministerio de Cultura, proyectos arqueol\xF3gicos, ONG, consultoras sociales y museos.",
+    teGustaSi: "Te fascinan las culturas, las costumbres y la historia del Per\xFA."
+  },
+  "historia": {
+    oferta: /^historia/,
+    queEstudias: "El pasado del Per\xFA y del mundo y c\xF3mo investigarlo con documentos y otras fuentes.",
+    temas: ["Historia del Per\xFA", "Historia universal", "Archiv\xEDstica", "M\xE9todos de investigaci\xF3n"],
+    trabajas: "Docencia, archivos, museos, Ministerio de Cultura, editoriales e investigaci\xF3n.",
+    teGustaSi: "Te encanta leer y conocer qu\xE9 pas\xF3 antes que nosotros."
+  },
+  // Ciencias básicas
+  "matematica": {
+    oferta: /^matematica|^fisico matematica|investigacion operativa/,
+    queEstudias: "La matem\xE1tica a fondo: \xE1lgebra, an\xE1lisis, probabilidades y sus aplicaciones.",
+    temas: ["C\xE1lculo", "\xC1lgebra lineal", "An\xE1lisis matem\xE1tico", "Probabilidades", "Programaci\xF3n"],
+    trabajas: "Investigaci\xF3n, docencia universitaria, bancos y seguros, an\xE1lisis de datos y tecnolog\xEDa.",
+    teGustaSi: "La matem\xE1tica es tu curso favorito y te gustan los retos."
+  },
+  "fisica": {
+    oferta: /^fisica$|^ingenieria fisica|geofisica|meteorolog/,
+    queEstudias: "Las leyes de la naturaleza, del \xE1tomo al universo, y c\xF3mo aplicarlas.",
+    temas: ["Mec\xE1nica", "Electromagnetismo", "F\xEDsica moderna", "Matem\xE1tica para f\xEDsicos", "Laboratorio"],
+    trabajas: "Investigaci\xF3n (IGP, IPEN, CONIDA), docencia, SENAMHI, industria y tecnolog\xEDa.",
+    teGustaSi: "Te preguntas c\xF3mo funciona el universo y te va bien en f\xEDsica y matem\xE1tica."
+  },
+  "quimica": {
+    oferta: /^quimica/,
+    queEstudias: "La materia y sus transformaciones: an\xE1lisis, s\xEDntesis y control de sustancias.",
+    temas: ["Qu\xEDmica general", "Qu\xEDmica org\xE1nica", "Qu\xEDmica anal\xEDtica", "Fisicoqu\xEDmica", "Laboratorio"],
+    trabajas: "Laboratorios, industria, miner\xEDa, control de calidad, investigaci\xF3n y docencia.",
+    teGustaSi: "Disfrutas los experimentos y la qu\xEDmica del colegio."
+  },
+  "biologia": {
+    oferta: /^biolog|microbiolog|biotecnolog|genetica/,
+    queEstudias: "Los seres vivos: c\xE9lulas, genes, ecosistemas y biodiversidad, con mucho laboratorio y campo.",
+    temas: ["Biolog\xEDa celular", "Gen\xE9tica", "Bot\xE1nica y zoolog\xEDa", "Ecolog\xEDa", "Microbiolog\xEDa"],
+    trabajas: "Investigaci\xF3n, laboratorios, conservaci\xF3n y \xE1reas protegidas, consultoras ambientales e industria.",
+    teGustaSi: "Te fascinan la naturaleza y la vida."
+  },
+  "estadistica": {
+    oferta: /estadist/,
+    queEstudias: "C\xF3mo recoger, ordenar y analizar datos para tomar buenas decisiones.",
+    temas: ["Probabilidades", "Inferencia estad\xEDstica", "Muestreo", "Programaci\xF3n (R, Python)", "Ciencia de datos"],
+    trabajas: "INEI, bancos, encuestadoras, empresas de tecnolog\xEDa, salud e investigaci\xF3n.",
+    teGustaSi: "Te gustan los n\xFAmeros y descubrir qu\xE9 dicen los datos."
+  },
+  // Arte e idiomas
+  "diseno-grafico": {
+    oferta: /diseno grafico/,
+    queEstudias: "C\xF3mo comunicar con im\xE1genes: logotipos, publicidad, p\xE1ginas web, empaques e ilustraci\xF3n.",
+    temas: ["Dibujo", "Teor\xEDa del color", "Tipograf\xEDa", "Herramientas digitales de dise\xF1o", "Dise\xF1o web"],
+    trabajas: "Agencias, editoriales, empresas, estudios de dise\xF1o o como independiente.",
+    teGustaSi: "Dibujas, editas fotos o videos y tienes buen ojo para lo visual."
+  },
+  "artes-musica": {
+    oferta: /^artes|^arte$|musica|^danza|composicion musical|direccion (coral|orquestal)|conservacion y restauracion/,
+    queEstudias: "La formaci\xF3n profesional en un arte: m\xFAsica, artes pl\xE1sticas, artes esc\xE9nicas o danza.",
+    temas: ["T\xE9cnica de tu arte", "Historia del arte", "Teor\xEDa", "Pr\xE1ctica y presentaciones"],
+    trabajas: "Orquestas, elencos, docencia, producci\xF3n cultural, Ministerio de Cultura o por tu cuenta.",
+    teGustaSi: "El arte es lo tuyo y practicas desde hace tiempo."
+  },
+  "idiomas": {
+    oferta: /^ingles$|^idiomas|traduccion|linguistica/,
+    queEstudias: "Idiomas extranjeros a nivel profesional, traducci\xF3n e interpretaci\xF3n.",
+    temas: ["Ingl\xE9s y otro idioma", "Ling\xFC\xEDstica", "Traducci\xF3n", "Interpretaci\xF3n"],
+    trabajas: "Traducci\xF3n, interpretaci\xF3n, docencia de idiomas, turismo y empresas internacionales.",
+    teGustaSi: "Aprendes idiomas con facilidad y te gusta leer y escribir."
+  }
+};
+
+// src/utils/paginaPreu.ts
+var CARRERAS_PREU = CARRERAS_CATALOGO.filter((c) => FICHAS_PREU[c.id]);
+
 // src/utils/seo.ts
 var SITIO_URL = "https://uninexo.link";
 var MARCA = "UniNexo Per\xFA";
@@ -75406,6 +75874,26 @@ var PAGINAS_SEO = {
     titulo: `Ex\xE1menes de admisi\xF3n pasados y temarios por universidad | ${MARCA}`,
     descripcion: "Ex\xE1menes de admisi\xF3n de 2020 en adelante (UNMSM, UNI, UNAC, UNCP\u2026) y gu\xEDas, temarios y prospectos oficiales de universidades del Per\xFA, con su fuente. Gratis."
   },
+  "/preu": {
+    titulo: `\xBFQu\xE9 carrera estudiar? Carreras y d\xF3nde estudiarlas en el Per\xFA | ${MARCA}`,
+    descripcion: "Para chicos de 5.\xBA de secundaria: qu\xE9 se estudia en cada carrera, d\xF3nde trabajas, en qu\xE9 universidades p\xFAblicas y privadas del Per\xFA se dicta y c\xF3mo postular (ex\xE1menes, academias y Beca 18). Gratis."
+  },
+  "/preu/test-intereses": {
+    titulo: `Test vocacional de intereses gratis: \xBFqu\xE9 carrera estudiar? | ${MARCA}`,
+    descripcion: "Test de intereses de 30 preguntas (unos 3 minutos) basado en el modelo de Holland. Te sugiere carreras para mirar y d\xF3nde estudiarlas en el Per\xFA. Gratis, sin registrarte y no guarda tus respuestas."
+  },
+  "/preu/becas": {
+    titulo: `Beca 18: requisitos, qu\xE9 cubre y fechas | ${MARCA}`,
+    descripcion: "Beca 18 del PRONABEC explicada para escolares: para qui\xE9n es, qu\xE9 cubre, requisitos, sus 9 modalidades y las fechas de la convocatoria, con enlace a la p\xE1gina oficial. Postular es gratis."
+  },
+  "/preu/padres": {
+    titulo: `Gu\xEDa para padres: c\xF3mo ayudar a tu hijo a elegir carrera | ${MARCA}`,
+    descripcion: "Consejos para pap\xE1s y mam\xE1s: escuchar, hablar de dinero, becas, verificar la licencia de la universidad, evitar estafas en la admisi\xF3n y cuidar la salud emocional. Gratis."
+  },
+  "/preu/comparar": {
+    titulo: `Compara universidades del Per\xFA lado a lado | ${MARCA}`,
+    descripcion: "Compara hasta 3 universidades del Per\xFA: p\xFAblica o privada, regi\xF3n, sedes, si dictan tu carrera, grupos de estudiantes y redes oficiales. Gratis."
+  },
   "/academia": {
     titulo: `Academias preuniversitarias por regi\xF3n y calendario de admisi\xF3n | ${MARCA}`,
     descripcion: "Academias y CEPRE de todo el Per\xFA con sus datos de contacto oficiales, y el calendario de admisi\xF3n de las universidades."
@@ -75415,7 +75903,7 @@ var PAGINAS_SEO = {
     descripcion: "Lo que todo cachimbo debe saber: tr\xE1mites de su universidad, redes oficiales y de su colegio profesional."
   },
   "/herramientas": {
-    titulo: `Calculadora de notas y armador de horario | ${MARCA}`,
+    titulo: `\xDAtiles: calculadora de notas y armador de horario | ${MARCA}`,
     descripcion: "Calcula tu promedio en escala vigesimal y arma tu horario sin cruces. Gratis y sin registrarte."
   },
   "/terminos": {
@@ -75454,10 +75942,25 @@ async function iniciarSesionBot() {
   const j = await r.json();
   if (!r.ok) throw new Error(`No pude iniciar sesi\xF3n con la cuenta del bot (${j?.error?.message || r.status}).`);
   const token = j.idToken;
+  const base = `projects/${config.projectId}/databases/(default)/documents`;
+  const commit = async (writes) => {
+    const res = await fetch(`https://firestore.googleapis.com/v1/${base}:commit`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...extra },
+      body: JSON.stringify({ writes })
+    });
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e?.error?.status || `HTTP ${res.status}`);
+    }
+  };
   return {
     uid: j.localId,
+    escribir: (ruta, datos, horaServidor = []) => commit([{
+      update: { name: `${base}/${ruta}`, fields: aFirestore(datos) },
+      ...horaServidor.length ? { updateTransforms: horaServidor.map((fieldPath) => ({ fieldPath, setToServerValue: "REQUEST_TIME" })) } : {}
+    }]),
     crear: async (coleccion, docs) => {
-      const base = `projects/${config.projectId}/databases/(default)/documents`;
       const res = await fetch(`https://firestore.googleapis.com/v1/${base}:commit`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...extra },

@@ -1,0 +1,13 @@
+name: Bot Preu (aprobaciones en Telegram)
+on:
+  schedule:
+    - cron: '45 */2 * * *'   # cada 2 horas: lee tus toques ✅/❌ del cronograma de Beca 18 y publica lo aprobado
+  workflow_dispatch:
+concurrency: { group: bot-preu, cancel-in-progress: false }
+permissions:
+  contents: write
+jobs:
+  correr:
+    uses: ./.github/workflows/_correr-bot.yml
+    with: { carpeta: preu, argumentos: '--aprobaciones', minutos: 15 }
+    secrets: inherit
