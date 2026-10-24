@@ -6,7 +6,7 @@ Cada vuelta (GitHub Actions, cada 2 horas):
   3. Desde las 9:00 de Perú, si no hay nada esperando y hoy aún no propuso, te manda UNA propuesta:
      una universidad nueva o una ya publicada cuyos datos cambiaron.
 Las entradas las arma ../publicador/blog-entradas-bot.mjs con los datos en vivo de uninexo.link (solo las que califican).
-Telegram: el bot de empleos (empleos/.env; ese bot no lee respuestas, así no choca con otro). Blogger: blog/.env (BLOGGER_*).
+Telegram: su propio bot (TELEGRAM_* en blog/.env) o, si falta, el de empleos. Blogger: blog/.env (BLOGGER_*).
 Memoria: estado.json.
 """
 import json
@@ -187,9 +187,11 @@ def vuelta(tg, blogger, estado, entradas_fn=armar_entradas, hora_minima=HORA_PRO
 
 
 def main(argv):
-    env_tg = telegram.cargar_env(os.path.join(AQUI, '..', 'empleos', '.env'))
+    env_blog = telegram.cargar_env(os.path.join(AQUI, '.env'))
+    # Su propio bot de Telegram si blog/.env lo trae (nadie más lee sus toques); si no, el de empleos
+    env_tg = env_blog if env_blog.get('TELEGRAM_BOT_TOKEN') else telegram.cargar_env(os.path.join(AQUI, '..', 'empleos', '.env'))
     tg = telegram.Telegram(env_tg.get('TELEGRAM_BOT_TOKEN'), env_tg.get('TELEGRAM_CHAT_ID'))
-    blogger = Blogger(telegram.cargar_env(os.path.join(AQUI, '.env')))
+    blogger = Blogger(env_blog)
     estado = cargar_json(ESTADO, None) or estado_inicial()
     for k, v in estado_inicial().items():
         estado.setdefault(k, v)
