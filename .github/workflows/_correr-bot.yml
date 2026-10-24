@@ -1,5 +1,5 @@
 # Flujo común: corre UN bot y guarda su memoria en el repositorio (los servidores de GitHub se borran al terminar).
-# Lo llaman empleos.yml, cursos.yml, convocatorias.yml, aprobaciones.yml, preu.yml y preu-aprobaciones.yml.
+# Lo llaman empleos.yml, cursos.yml, convocatorias.yml, aprobaciones.yml, preu.yml, preu-aprobaciones.yml y blog.yml.
 name: Correr bot
 on:
   workflow_call:
@@ -27,12 +27,15 @@ jobs:
           EMPLEOS_ENV: ${{ secrets.EMPLEOS_ENV }}
           CURSOS_ENV: ${{ secrets.CURSOS_ENV }}
           CONVOCATORIAS_ENV: ${{ secrets.CONVOCATORIAS_ENV }}
+          BLOG_ENV: ${{ secrets.BLOG_ENV }}
         run: |
           printf '%s\n' "$EMPLEOS_ENV" > empleos/.env
           printf '%s\n' "$CURSOS_ENV" > cursos/.env
           printf '%s\n' "$CONVOCATORIAS_ENV" > convocatorias/.env
           # El «Bot Preu» manda sus avisos por el bot de Telegram de Convocatorias (nadie más lee sus respuestas)
           printf '%s\n' "$CONVOCATORIAS_ENV" > preu/.env
+          # Bot del blog: permiso de Blogger (OAuth). Telegram: el de empleos
+          printf '%s\n' "$BLOG_ENV" > blog/.env
           chmod 600 */.env
 
       - name: Correr el bot

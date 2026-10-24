@@ -72510,7 +72510,7 @@ var PAGINAS_SEO = {
   },
   "/preu/test-intereses": {
     titulo: `Test vocacional de intereses gratis: \xBFqu\xE9 carrera estudiar? | ${MARCA}`,
-    descripcion: "Test de intereses de 30 preguntas (unos 3 minutos) basado en el modelo de Holland. Te sugiere carreras para mirar y d\xF3nde estudiarlas en el Per\xFA. Gratis, sin registrarte y no guarda tus respuestas."
+    descripcion: "Test de intereses de 30 preguntas (unos 3 minutos) basado en el modelo de Holland. Te sugiere carreras para mirar y d\xF3nde estudiarlas en el Per\xFA. Gratis, sin registrarte y tus respuestas no salen de tu celular."
   },
   "/preu/becas": {
     titulo: `Beca 18: requisitos, qu\xE9 cubre y fechas | ${MARCA}`,

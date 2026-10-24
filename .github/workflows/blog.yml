@@ -1,0 +1,13 @@
+name: Bot del blog (entradas por universidad)
+on:
+  schedule:
+    - cron: '20 */2 * * *'   # cada 2 horas: lee tus ✅/❌, publica lo aprobado y, desde las 9:00 de Perú, propone 1 universidad al día
+  workflow_dispatch:
+concurrency: { group: bot-blog, cancel-in-progress: false }
+permissions:
+  contents: write
+jobs:
+  correr:
+    uses: ./.github/workflows/_correr-bot.yml
+    with: { carpeta: blog, minutos: 20 }
+    secrets: inherit
