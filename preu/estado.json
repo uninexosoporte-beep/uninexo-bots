@@ -1,11 +1,115 @@
 {
  "beca18": {
-  "firma": null,
+  "firma": "a0f4f067e7ae",
   "pendiente": null
  },
- "concursos": null,
- "enlaces": {},
+ "concursos": [
+  "https://www.pronabec.gob.pe/beca-18/",
+  "https://www.pronabec.gob.pe/beca-generacion-bicentenario/"
+ ],
+ "enlaces": {
+  "https://www.pronabec.gob.pe/beca-18/": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.pronabec.gob.pe/concursos-becas-creditos/": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.sunedu.gob.pe/lista-de-universidades-licenciadas/": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://ponteencarrera.minedu.gob.pe/": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://unmsm.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.uni.edu.pe": {
+   "fallos": 1,
+   "avisado": false
+  },
+  "https://www.lamolina.edu.pe": {
+   "fallos": 1,
+   "avisado": false
+  },
+  "https://www.unfv.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.unac.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.unitru.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.unprg.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.uncp.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.unica.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.unsa.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.unsaac.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.unamad.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.pucp.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.ulima.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.up.edu.pe": {
+   "fallos": 1,
+   "avisado": false
+  },
+  "https://cayetano.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.upc.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.usil.edu.pe": {
+   "fallos": 1,
+   "avisado": false
+  },
+  "https://www.usmp.edu.pe": {
+   "fallos": 1,
+   "avisado": false
+  },
+  "https://www.utp.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  },
+  "https://www.ucv.edu.pe": {
+   "fallos": 0,
+   "avisado": false
+  }
+ },
  "offset": 0,
- "ultima_semanal": null,
+ "ultima_semanal": "2026-10-26",
  "aviso_error": null
 }
