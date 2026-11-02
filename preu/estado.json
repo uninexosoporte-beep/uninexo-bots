@@ -29,12 +29,12 @@
    "avisado": false
   },
   "https://www.uni.edu.pe": {
-   "fallos": 1,
-   "avisado": false
+   "fallos": 2,
+   "avisado": true
   },
   "https://www.lamolina.edu.pe": {
-   "fallos": 1,
-   "avisado": false
+   "fallos": 2,
+   "avisado": true
   },
   "https://www.unfv.edu.pe": {
    "fallos": 0,
@@ -73,7 +73,7 @@
    "avisado": false
   },
   "https://www.pucp.edu.pe": {
-   "fallos": 0,
+   "fallos": 1,
    "avisado": false
   },
   "https://www.ulima.edu.pe": {
@@ -81,8 +81,8 @@
    "avisado": false
   },
   "https://www.up.edu.pe": {
-   "fallos": 1,
-   "avisado": false
+   "fallos": 2,
+   "avisado": true
   },
   "https://cayetano.edu.pe": {
    "fallos": 0,
@@ -93,12 +93,12 @@
    "avisado": false
   },
   "https://www.usil.edu.pe": {
-   "fallos": 1,
-   "avisado": false
+   "fallos": 2,
+   "avisado": true
   },
   "https://www.usmp.edu.pe": {
-   "fallos": 1,
-   "avisado": false
+   "fallos": 2,
+   "avisado": true
   },
   "https://www.utp.edu.pe": {
    "fallos": 0,
@@ -110,6 +110,6 @@
   }
  },
  "offset": 0,
- "ultima_semanal": "2026-10-26",
+ "ultima_semanal": "2026-11-02",
  "aviso_error": null
 }
