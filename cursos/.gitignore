@@ -1,5 +1,6 @@
 .env
-estado.sqlite
 logs/
-salida/
 __pycache__/
+# estado.sqlite y salida/*.json SÍ se guardan: en GitHub Actions el servidor se borra y sin memoria el bot
+# cree que es su primera vez (solo aprende, no publica nada)
+salida/*.pdf
