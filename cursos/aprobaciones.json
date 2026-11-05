@@ -208,6 +208,23 @@
    "estado": "pendiente",
    "mensaje": 61,
    "enviado": "2026-11-04"
+  },
+  "2313469eaa8e": {
+   "doc": {
+    "name": "Sanipes desarrolló webinar sobre sistemas digitales para fortalecer la sanidad e inocuidad pesquera y acuícola en la Alianza del Pacífico",
+    "career": "Tecnología e Informática",
+    "region": "Todo el país",
+    "tipo": "webinar",
+    "enlaceOficial": "https://www.gob.pe/institucion/sanipes/noticias/1468988-sanipes-desarrollo-webinar-sobre-sistemas-digitales-para-fortalecer-la-sanidad-e-inocuidad-pesquera-y-acuicola-en-la-alianza-del-pacifico",
+    "institucion": "SANIPES",
+    "gratuito": false,
+    "description": "Sanipes desarrolló webinar sobre sistemas digitales para fortalecer la sanidad e inocuidad pesquera y acuícola en la Alianza del Pacífico - Noticias - Autoridad Nacional de Sanidad e Inocuidad en Pesca y Acuicultura - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en go Detectada automáticamente el 05/11/2026 en gob.pe (SANIPES), publicada el 04/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Tecnología e Informática",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 65,
+   "enviado": "2026-11-05"
   }
  }
 }
