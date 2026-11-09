@@ -25,15 +25,15 @@
    "avisado": false
   },
   "https://unmsm.edu.pe": {
-   "fallos": 0,
+   "fallos": 1,
    "avisado": false
   },
   "https://www.uni.edu.pe": {
-   "fallos": 2,
+   "fallos": 3,
    "avisado": true
   },
   "https://www.lamolina.edu.pe": {
-   "fallos": 2,
+   "fallos": 3,
    "avisado": true
   },
   "https://www.unfv.edu.pe": {
@@ -49,7 +49,7 @@
    "avisado": false
   },
   "https://www.unprg.edu.pe": {
-   "fallos": 0,
+   "fallos": 1,
    "avisado": false
   },
   "https://www.uncp.edu.pe": {
@@ -73,15 +73,15 @@
    "avisado": false
   },
   "https://www.pucp.edu.pe": {
-   "fallos": 1,
-   "avisado": false
+   "fallos": 2,
+   "avisado": true
   },
   "https://www.ulima.edu.pe": {
    "fallos": 0,
    "avisado": false
   },
   "https://www.up.edu.pe": {
-   "fallos": 2,
+   "fallos": 3,
    "avisado": true
   },
   "https://cayetano.edu.pe": {
@@ -93,11 +93,11 @@
    "avisado": false
   },
   "https://www.usil.edu.pe": {
-   "fallos": 2,
+   "fallos": 3,
    "avisado": true
   },
   "https://www.usmp.edu.pe": {
-   "fallos": 2,
+   "fallos": 3,
    "avisado": true
   },
   "https://www.utp.edu.pe": {
@@ -110,6 +110,6 @@
   }
  },
  "offset": 0,
- "ultima_semanal": "2026-11-02",
+ "ultima_semanal": "2026-11-09",
  "aviso_error": null
 }
