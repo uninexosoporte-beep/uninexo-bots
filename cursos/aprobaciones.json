@@ -656,6 +656,40 @@
    "estado": "pendiente",
    "mensaje": 107,
    "enviado": "2026-11-12"
+  },
+  "5d5e53dd299a": {
+   "doc": {
+    "name": "Programa de Extensión Universitaria del OEFA - PEU 2027",
+    "career": "Tecnología e Informática",
+    "region": "Todo el país",
+    "tipo": "especializacion",
+    "enlaceOficial": "https://www.gob.pe/institucion/oefa/campa%C3%B1as/146943-programa-de-extension-universitaria-del-oefa-peu-2027",
+    "institucion": "OEFA",
+    "gratuito": false,
+    "description": "Programa de Extensión Universitaria del OEFA - PEU 2027 - Campañas - Organismo de Evaluación y Fiscalización Ambiental - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado MINAM OEFA Campañas y eventos Programa de Extensión Universitaria del OEFA Detectada automáticamente el 13/11/2026 en gob.pe (OEFA), publicada el 12/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Tecnología e Informática",
+    "costoTexto": "Por confirmar",
+    "modalidad": "virtual"
+   },
+   "estado": "pendiente",
+   "mensaje": 111,
+   "enviado": "2026-11-13"
+  },
+  "9d5a113e98d8": {
+   "doc": {
+    "name": "Foro Urbano Nacional 2026: Ciudad de Oportunidades",
+    "career": "Arquitectura y Construcción",
+    "region": "Todo el país",
+    "tipo": "webinar",
+    "enlaceOficial": "https://www.gob.pe/institucion/vivienda/campa%C3%B1as/146947-foro-urbano-nacional-2026-ciudad-de-oportunidades",
+    "institucion": "VIVIENDA",
+    "gratuito": true,
+    "description": "Foro Urbano Nacional 2026: Ciudad de Oportunidades - Campañas - Ministerio de Vivienda, Construcción y Saneamiento - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado VIVIENDA Campañas y eventos Foro Urbano Nacional 2026: Ciudad de Oportunidades Detectada automáticamente el 13/11/2026 en gob.pe (VIVIENDA), publicada el 12/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Arquitectura y Construcción"
+   },
+   "estado": "pendiente",
+   "mensaje": 112,
+   "enviado": "2026-11-13"
   }
  }
 }
