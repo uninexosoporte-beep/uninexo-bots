@@ -789,6 +789,39 @@
    "estado": "pendiente",
    "mensaje": 128,
    "enviado": "2026-11-17"
+  },
+  "7fc8bad4b730": {
+   "doc": {
+    "name": "APCI acercó oportunidades de becas y cooperación internacional a jóvenes y servidores públicos en feria del Congreso",
+    "career": "Gestión Pública",
+    "region": "Todo el país",
+    "tipo": "beca",
+    "enlaceOficial": "https://www.gob.pe/institucion/apci/noticias/1474847-apci-acerco-oportunidades-de-becas-y-cooperacion-internacional-a-jovenes-y-servidores-publicos-en-feria-del-congreso",
+    "institucion": "APCI",
+    "gratuito": false,
+    "description": "APCI acercó oportunidades de becas y cooperación internacional a jóvenes y servidores públicos en feria del Congreso - Noticias - Agencia Peruana de Cooperación Internacional - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado RREE APCI Noticias Detectada automáticamente el 18/11/2026 en gob.pe (APCI), publicada el 17/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Gestión Pública",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 132,
+   "enviado": "2026-11-18"
+  },
+  "a84fe95e97d7": {
+   "doc": {
+    "name": "Cancillería participa en taller regional sobre atención y reporte de enmalles de grandes cetáceos",
+    "career": "Todas las carreras",
+    "region": "Todo el país",
+    "tipo": "taller",
+    "enlaceOficial": "https://www.gob.pe/institucion/rree/noticias/1474449-cancilleria-participa-en-taller-regional-sobre-atencion-y-reporte-de-enmalles-de-grandes-cetaceos",
+    "institucion": "Cancillería",
+    "gratuito": false,
+    "description": "Cancillería participa en taller regional sobre atención y reporte de enmalles de grandes cetáceos - Noticias - Ministerio de Relaciones Exteriores - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado RREE Noticias Cancillería participa en taller r Detectada automáticamente el 18/11/2026 en gob.pe (Cancillería), publicada el 17/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 133,
+   "enviado": "2026-11-18"
   }
  }
 }
