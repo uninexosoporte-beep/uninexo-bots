@@ -49,7 +49,7 @@
     "fechaLimite": "2026-11-13",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 52,
    "enviado": "2026-11-04"
   },
@@ -67,7 +67,7 @@
     "fechaLimite": "2026-11-13",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 53,
    "enviado": "2026-11-04"
   },
@@ -83,7 +83,7 @@
     "description": "Más de 20 mil estudiantes de hogares Juntos accederán gratis a plataforma para prepararse para Beca 18 - Noticias - Programa Nacional de Apoyo Directo a los más Pobres - JUNTOS - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado MIDIS JUNTOS Noti Detectada automáticamente el 04/11/2026 en gob.pe (JUNTOS), publicada el 03/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
     "area": "Tecnología e Informática"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 54,
    "enviado": "2026-11-04"
   },
@@ -100,7 +100,7 @@
     "area": "Tecnología e Informática",
     "modalidad": "presencial"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 55,
    "enviado": "2026-11-04"
   },
@@ -117,7 +117,7 @@
     "area": "Educación",
     "modalidad": "presencial"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 56,
    "enviado": "2026-11-04"
   },
@@ -135,7 +135,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 57,
    "enviado": "2026-11-04"
   },
@@ -152,7 +152,7 @@
     "area": "Tecnología e Informática",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 58,
    "enviado": "2026-11-04"
   },
@@ -169,7 +169,7 @@
     "area": "Economía",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 59,
    "enviado": "2026-11-04"
   },
@@ -187,7 +187,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "hibrido"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 60,
    "enviado": "2026-11-04"
   },
@@ -205,7 +205,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 61,
    "enviado": "2026-11-04"
   },
