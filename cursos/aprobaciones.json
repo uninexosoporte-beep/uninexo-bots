@@ -239,7 +239,7 @@
     "area": "Tecnología e Informática",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 69,
    "enviado": "2026-11-06"
   },
@@ -257,7 +257,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 70,
    "enviado": "2026-11-06"
   },
@@ -275,7 +275,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 71,
    "enviado": "2026-11-06"
   },
@@ -292,7 +292,7 @@
     "area": "Educación",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 72,
    "enviado": "2026-11-06"
   },
@@ -309,7 +309,7 @@
     "area": "Salud",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 73,
    "enviado": "2026-11-06"
   },
@@ -326,7 +326,7 @@
     "area": "Ciencias Básicas",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 74,
    "enviado": "2026-11-06"
   },
