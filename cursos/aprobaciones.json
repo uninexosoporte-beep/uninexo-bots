@@ -344,7 +344,7 @@
     "fechaLimite": "2026-11-13",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 78,
    "enviado": "2026-11-07"
   },
@@ -361,7 +361,7 @@
     "area": "Educación",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 79,
    "enviado": "2026-11-07"
   },
@@ -378,7 +378,7 @@
     "area": "Tecnología e Informática",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 80,
    "enviado": "2026-11-07"
   },
@@ -395,7 +395,7 @@
     "area": "Agropecuaria y Ambiente",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 81,
    "enviado": "2026-11-07"
   },
@@ -412,7 +412,7 @@
     "area": "Contabilidad y Finanzas",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 82,
    "enviado": "2026-11-07"
   },
@@ -429,7 +429,7 @@
     "area": "Ciencias Sociales y Humanidades",
     "fechaLimite": "2026-11-29"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 83,
    "enviado": "2026-11-07"
   },
