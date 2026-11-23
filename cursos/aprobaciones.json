@@ -1177,6 +1177,56 @@
    "estado": "pendiente",
    "mensaje": 163,
    "enviado": "2026-11-21"
+  },
+  "b7323bc6ec5f": {
+   "doc": {
+    "name": "Más de 52 000 peruanos rindieron en todo el país el examen de Beca 18 para continuar en competencia",
+    "career": "Tecnología e Informática",
+    "region": "Todo el país",
+    "tipo": "beca",
+    "enlaceOficial": "https://www.gob.pe/institucion/pronabec/noticias/1479047-mas-de-52-000-peruanos-rindieron-en-todo-el-pais-el-examen-de-beca-18-para-continuar-en-competencia",
+    "institucion": "PRONABEC",
+    "gratuito": true,
+    "description": "Más de 52 000 peruanos rindieron en todo el país el examen de Beca 18 para continuar en competencia - Noticias - Programa Nacional de Becas y Crédito Educativo - Plataforma del Estado Peruano Saltar a contenido principal Concursos vigentes por becas y créditos Pronabec Leer aviso completo Cerrar avi Detectada automáticamente el 23/11/2026 en gob.pe (PRONABEC), publicada el 22/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Tecnología e Informática",
+    "modalidad": "presencial"
+   },
+   "estado": "pendiente",
+   "mensaje": 168,
+   "enviado": "2026-11-23"
+  },
+  "11fd07062c09": {
+   "doc": {
+    "name": "Por primera vez Beca 18 establece puntaje mínimo para fortalecer la meritocracia",
+    "career": "Educación",
+    "region": "Todo el país",
+    "tipo": "beca",
+    "enlaceOficial": "https://www.gob.pe/institucion/minedu/noticias/1479040-por-primera-vez-beca-18-establece-puntaje-minimo-para-fortalecer-la-meritocracia",
+    "institucion": "Ministerio de Educación",
+    "gratuito": true,
+    "description": "Por primera vez Beca 18 establece puntaje mínimo para fortalecer la meritocracia - Noticias - Ministerio de Educación - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado MINEDU Noticias Por primera vez Beca 18 establece puntaje mínimo para fortal Detectada automáticamente el 23/11/2026 en gob.pe (Ministerio de Educación), publicada el 22/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Educación"
+   },
+   "estado": "pendiente",
+   "mensaje": 169,
+   "enviado": "2026-11-23"
+  },
+  "28e760bc33c0": {
+   "doc": {
+    "name": "PROMPERÚ promoverá el café y el cacao peruanos en FestiSabores 2026 y formará parte del Foro Nacional de Gastronomía en Arequipa",
+    "career": "Agropecuaria y Ambiente",
+    "region": "Arequipa",
+    "tipo": "webinar",
+    "enlaceOficial": "https://www.gob.pe/institucion/promperu/noticias/1479252-promperu-promovera-el-cafe-y-el-cacao-peruanos-en-festisabores-2026-y-formara-parte-del-foro-nacional-de-gastronomia-en-arequipa",
+    "institucion": "PROMPERU",
+    "gratuito": false,
+    "description": "PROMPERÚ promoverá el café y el cacao peruanos en FestiSabores 2026 y formará parte del Foro Nacional de Gastronomía en Arequipa - Noticias - Comisión de Promoción del Perú para la Exportación y el Turismo - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inici Detectada automáticamente el 23/11/2026 en gob.pe (PROMPERU), publicada el 20/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Agropecuaria y Ambiente",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 170,
+   "enviado": "2026-11-23"
   }
  }
 }
