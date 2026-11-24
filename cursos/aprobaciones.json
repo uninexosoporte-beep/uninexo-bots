@@ -1227,6 +1227,57 @@
    "estado": "pendiente",
    "mensaje": 170,
    "enviado": "2026-11-23"
+  },
+  "a33915d1afef": {
+   "doc": {
+    "name": "Más de 730 postulantes de todo el país rindieron el examen de admisión del PEU 2027 de la Sunass",
+    "career": "Arquitectura y Construcción",
+    "region": "Todo el país",
+    "tipo": "especializacion",
+    "enlaceOficial": "https://www.gob.pe/institucion/sunass/noticias/1480408-mas-de-730-postulantes-de-todo-el-pais-rindieron-el-examen-de-admision-del-peu-2027-de-la-sunass",
+    "institucion": "SUNASS",
+    "gratuito": true,
+    "description": "Más de 730 postulantes de todo el país rindieron el examen de admisión del PEU 2027 de la Sunass - Noticias - Superintendencia Nacional de Servicios de Saneamiento - Plataforma del Estado Peruano Saltar a contenido principal Puntos provisionales de abastecimiento fijo ante emergencias (Lima Metropol Detectada automáticamente el 24/11/2026 en gob.pe (SUNASS), publicada el 24/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Arquitectura y Construcción",
+    "modalidad": "hibrido"
+   },
+   "estado": "pendiente",
+   "mensaje": 174,
+   "enviado": "2026-11-24"
+  },
+  "b9e5c2f9d34d": {
+   "doc": {
+    "name": "¡Emprendedora, haz crecer tu negocio! Inscríbete en el padrón del MIMP y accede a capacitaciones",
+    "career": "Empleabilidad y Desarrollo Personal",
+    "region": "Todo el país",
+    "tipo": "curso",
+    "enlaceOficial": "https://www.gob.pe/institucion/mimp/noticias/1480432-emprendedora-haz-crecer-tu-negocio-inscribete-en-el-padron-del-mimp-y-accede-a-capacitaciones",
+    "institucion": "MIMP",
+    "gratuito": true,
+    "description": "¡Emprendedora, haz crecer tu negocio! Inscríbete en el padrón del MIMP y accede a capacitaciones - Noticias - Ministerio de la Mujer y Poblaciones Vulnerables - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado MIMP Noticias ¡Emprendedora, haz cr Detectada automáticamente el 24/11/2026 en gob.pe (MIMP), publicada el 24/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Empleabilidad y Desarrollo Personal",
+    "modalidad": "virtual"
+   },
+   "estado": "pendiente",
+   "mensaje": 175,
+   "enviado": "2026-11-24"
+  },
+  "05fb17a3cef9": {
+   "doc": {
+    "name": "La UNAJ recibe en Lima un reconocimiento de SERVIR por participar en el piloto de gestión de pasantías profesionales",
+    "career": "Administración y Negocios",
+    "region": "Lima",
+    "tipo": "experiencia_laboral",
+    "enlaceOficial": "https://www.gob.pe/institucion/unaj/noticias/1479881-la-unaj-recibe-en-lima-un-reconocimiento-de-servir-por-participar-en-el-piloto-de-gestion-de-pasantias-profesionales",
+    "institucion": "UNAJ",
+    "gratuito": false,
+    "description": "La UNAJ recibe en Lima un reconocimiento de SERVIR por participar en el piloto de gestión de pasantías profesionales - Noticias - Universidad Nacional de Juliaca - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado MINEDU UNAJ Noticias La UNAJ rec Detectada automáticamente el 24/11/2026 en gob.pe (UNAJ), publicada el 23/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Administración y Negocios",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 176,
+   "enviado": "2026-11-24"
   }
  }
 }
