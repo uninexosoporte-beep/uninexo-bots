@@ -496,7 +496,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "hibrido"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 95,
    "enviado": "2026-11-11"
   },
@@ -513,7 +513,7 @@
     "area": "Derecho y Ciencias Políticas",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 96,
    "enviado": "2026-11-11"
   },
@@ -531,7 +531,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 97,
    "enviado": "2026-11-11"
   },
@@ -549,7 +549,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "presencial"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 98,
    "enviado": "2026-11-11"
   },
@@ -566,7 +566,7 @@
     "area": "Empleabilidad y Desarrollo Personal",
     "modalidad": "presencial"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 99,
    "enviado": "2026-11-11"
   },
