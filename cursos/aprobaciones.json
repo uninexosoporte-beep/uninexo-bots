@@ -1295,6 +1295,75 @@
    "estado": "pendiente",
    "mensaje": 180,
    "enviado": "2026-11-25"
+  },
+  "5b75e5244c0a": {
+   "doc": {
+    "name": "Pronabec aplica examen inclusivo en sistema Braille para Beca 18",
+    "career": "Tecnología e Informática",
+    "region": "Todo el país",
+    "tipo": "beca",
+    "enlaceOficial": "https://www.gob.pe/institucion/pronabec/noticias/1481173-pronabec-aplica-examen-inclusivo-en-sistema-braille-para-beca-18",
+    "institucion": "PRONABEC",
+    "gratuito": false,
+    "description": "Pronabec aplica examen inclusivo en sistema Braille para Beca 18 - Noticias - Programa Nacional de Becas y Crédito Educativo - Plataforma del Estado Peruano Saltar a contenido principal Concursos vigentes por becas y créditos Pronabec Leer aviso completo Cerrar aviso Texto de búsqueda en gob.pe Inic Detectada automáticamente el 26/11/2026 en gob.pe (PRONABEC), publicada el 25/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Tecnología e Informática",
+    "costoTexto": "Por confirmar",
+    "modalidad": "presencial"
+   },
+   "estado": "pendiente",
+   "mensaje": 184,
+   "enviado": "2026-11-26"
+  },
+  "d203f86efa83": {
+   "doc": {
+    "name": "SENCICO presenta detalles sobre carreras técnicas y cursos de especialización a jóvenes en feria vocacional del INABIF",
+    "career": "Arquitectura y Construcción",
+    "region": "Todo el país",
+    "tipo": "especializacion",
+    "enlaceOficial": "https://www.gob.pe/institucion/sencico/noticias/1481088-sencico-presenta-detalles-sobre-carreras-tecnicas-y-cursos-de-especializacion-a-jovenes-en-feria-vocacional-del-inabif",
+    "institucion": "SENCICO",
+    "gratuito": false,
+    "description": "SENCICO presenta detalles sobre carreras técnicas y cursos de especialización a jóvenes en feria vocacional del INABIF - Noticias - Servicio Nacional de Capacitación para la Industria de la Construcción - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio E Detectada automáticamente el 26/11/2026 en gob.pe (SENCICO), publicada el 24/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Arquitectura y Construcción",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 185,
+   "enviado": "2026-11-26"
+  },
+  "570a2380815b": {
+   "doc": {
+    "name": "Puno: PAE promueve la preparación de alimentos nutritivos con talleres demostrativos en 172 colegios",
+    "career": "Tecnología e Informática",
+    "region": "Puno",
+    "tipo": "taller",
+    "enlaceOficial": "https://www.gob.pe/institucion/pae/noticias/1481232-puno-pae-promueve-la-preparacion-de-alimentos-nutritivos-con-talleres-demostrativos-en-172-colegios",
+    "institucion": "PAE",
+    "gratuito": false,
+    "description": "Puno: PAE promueve la preparación de alimentos nutritivos con talleres demostrativos en 172 colegios - Noticias - Programa de Alimentación Escolar - PAE - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado MIDIS PAE Noticias Puno: PAE promueve la Detectada automáticamente el 26/11/2026 en gob.pe (PAE), publicada el 25/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Tecnología e Informática",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 186,
+   "enviado": "2026-11-26"
+  },
+  "c0861be89da4": {
+   "doc": {
+    "name": "SNI lanza 2da convocatoria del concurso “Promoviendo Cadenas Circulares” para beneficiar a 30 empresas con proyectos de economía circular",
+    "career": "Economía",
+    "region": "Todo el país",
+    "tipo": "convocatoria",
+    "enlaceOficial": "https://www.gob.pe/institucion/proinnovate/noticias/1481081-sni-lanza-2da-convocatoria-del-concurso-promoviendo-cadenas-circulares-para-beneficiar-a-30-empresas-con-proyectos-de-economia-circular",
+    "institucion": "PROINNOVATE",
+    "gratuito": false,
+    "description": "SNI lanza 2da convocatoria del concurso “Promoviendo Cadenas Circulares” para beneficiar a 30 empresas con proyectos de economía circular - Noticias - Programa Nacional de Innovación y Desarrollo Productivo - ProInnóvate - Plataforma del Estado Peruano Saltar a contenido principal Conoce el calendar Detectada automáticamente el 26/11/2026 en gob.pe (PROINNOVATE), publicada el 25/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Economía",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 187,
+   "enviado": "2026-11-26"
   }
  }
 }
