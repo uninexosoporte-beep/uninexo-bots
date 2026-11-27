@@ -584,7 +584,7 @@
     "fechaLimite": "2026-11-22",
     "modalidad": "virtual"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 103,
    "enviado": "2026-11-12"
   },
@@ -601,7 +601,7 @@
     "area": "Educación",
     "modalidad": "presencial"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 104,
    "enviado": "2026-11-12"
   },
@@ -618,7 +618,7 @@
     "area": "Tecnología e Informática",
     "modalidad": "presencial"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 105,
    "enviado": "2026-11-12"
   },
@@ -636,7 +636,7 @@
     "costoTexto": "Por confirmar",
     "modalidad": "presencial"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 106,
    "enviado": "2026-11-12"
   },
@@ -653,7 +653,7 @@
     "area": "Tecnología e Informática",
     "costoTexto": "Por confirmar"
    },
-   "estado": "pendiente",
+   "estado": "vencida",
    "mensaje": 107,
    "enviado": "2026-11-12"
   },
