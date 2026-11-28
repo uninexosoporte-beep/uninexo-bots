@@ -1482,6 +1482,39 @@
    "estado": "pendiente",
    "mensaje": 197,
    "enviado": "2026-11-27"
+  },
+  "e43f0c3c0b3a": {
+   "doc": {
+    "name": "Ministerio de Vivienda inicia capacitación de 26 operadores comunitarios de agua potable rural en Sencico Chiclayo",
+    "career": "Arquitectura y Construcción",
+    "region": "Todo el país",
+    "tipo": "curso",
+    "enlaceOficial": "https://www.gob.pe/institucion/vivienda/noticias/1482177-ministerio-de-vivienda-inicia-capacitacion-de-26-operadores-comunitarios-de-agua-potable-rural-en-sencico-chiclayo",
+    "institucion": "VIVIENDA",
+    "gratuito": false,
+    "description": "Ministerio de Vivienda inicia capacitación de 26 operadores comunitarios de agua potable rural en Sencico Chiclayo - Noticias - Ministerio de Vivienda, Construcción y Saneamiento - Plataforma del Estado Peruano Saltar a contenido principal Texto de búsqueda en gob.pe Inicio El Estado VIVIENDA Notici Detectada automáticamente el 28/11/2026 en gob.pe (VIVIENDA), publicada el 28/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "area": "Arquitectura y Construcción",
+    "costoTexto": "Por confirmar"
+   },
+   "estado": "pendiente",
+   "mensaje": 201,
+   "enviado": "2026-11-28"
+  },
+  "ea6de03eca78": {
+   "doc": {
+    "name": "JNE ofrecerá conferencia sobre las Consultas Populares de Demarcación Territorial 2027",
+    "career": "Todas las carreras",
+    "region": "Todo el país",
+    "tipo": "webinar",
+    "enlaceOficial": "https://www.gob.pe/institucion/jne/noticias/1482034-jne-ofrecera-conferencia-sobre-las-consultas-populares-de-demarcacion-territorial-2027",
+    "institucion": "JNE",
+    "gratuito": true,
+    "description": "JNE ofrecerá conferencia sobre las Consultas Populares de Demarcación Territorial 2027 - Noticias - Jurado Nacional de Elecciones - Plataforma del Estado Peruano Saltar a contenido principal El JNE asume la vicepresidencia de la Asociación Mundial de Organismos Electorales (2026-2028) Leer aviso com Detectada automáticamente el 28/11/2026 en gob.pe (JNE), publicada el 27/11/2026. Revisa las bases en la página oficial antes de aprobarla.",
+    "modalidad": "virtual"
+   },
+   "estado": "pendiente",
+   "mensaje": 202,
+   "enviado": "2026-11-28"
   }
  }
 }
